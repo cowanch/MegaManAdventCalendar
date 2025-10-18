@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import Portrait from './components/Portrait.vue';
+    import { computed, ref } from 'vue';
+    import Portrait from './components/Portrait.vue';
+    import TextDisplay from './components/TextDisplay.vue';
 
-const sizeMultiplier = ref(2.75);
-const containerClassObject = computed(() => ({
-    "column-gap": `${28 * sizeMultiplier.value}px`,
-    "row-gap": `${16 * sizeMultiplier.value}px`,
-}))
+    const sizeMultiplier = ref(2.75);
+    const containerClassObject = computed(() => ({
+        "column-gap": `${28 * sizeMultiplier.value}px`,
+        "row-gap": `${16 * sizeMultiplier.value}px`,
+    }))
 </script>
 
 <template>
+    <TextDisplay text="Test Man" />
     <div class="container" :style="containerClassObject">
         <Portrait class="portrait" v-for="y in 25" :key="y" :sizeMultiplier="sizeMultiplier" />
     </div>
