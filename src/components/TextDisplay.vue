@@ -36,11 +36,13 @@
 </script>
 
 <template>
-    <div class="word-container">
-        <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
-    </div>
-    <div class="word-container">
-        <div class="text-display" v-for="(char, index) in word2Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
+    <div>
+        <div class="word-container">
+            <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
+        </div>
+        <div class="word-container">
+            <div class="text-display" v-for="(char, index) in word2Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
+        </div>
     </div>
 </template>
 
