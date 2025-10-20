@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { computed, ref } from 'vue';
     import TextDisplay from './TextDisplay.vue';
 
     interface Props {
@@ -7,13 +8,26 @@
     }
 
     const { sizeMultiplier = 1, isHovered = false } = defineProps<Props>();
+
+    const animFrame = ref(0);
+    const frameRate = 8; // frames per second
+    const interval = 1000 / frameRate;
+    if (isHovered) {
+        setInterval(() => {
+            animFrame.value = (animFrame.value + 1) % 2;
+        }, interval);
+    }
+
+    const highlightStyle = computed(() => ({
+        backgroundPosition: `-${animFrame.value * 159}px 0px`,
+    }));
 </script>
 
 <template>
     <div class="portrait-container">
         <div class="stack">
             <div class="frame" />
-            <div v-if="isHovered" class="highlight" />
+            <div v-if="isHovered" class="highlight" :style="highlightStyle" />
         </div>
         <TextDisplay text="Test Man" style="margin-left: 6px;" />
     </div>
