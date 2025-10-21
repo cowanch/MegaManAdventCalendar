@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, ref } from 'vue';
+    import { computed, ref, watch } from 'vue';
     import TextDisplay from './TextDisplay.vue';
 
     interface Props {
@@ -12,11 +12,20 @@
     const animFrame = ref(0);
     const frameRate = 8; // frames per second
     const interval = 1000 / frameRate;
-    if (isHovered) {
-        setInterval(() => {
-            animFrame.value = (animFrame.value + 1) % 2;
-        }, interval);
-    }
+    let intervalId: number | null = null;
+    watch(() => isHovered, (h) => {
+        if (!h) {
+            if (intervalId !== null) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+            animFrame.value = 0;
+        } else {
+            intervalId = setInterval(() => {
+                animFrame.value = (animFrame.value + 1) % 2;
+            }, interval);
+        }
+    });
 
     const highlightStyle = computed(() => ({
         backgroundPosition: `-${animFrame.value * 159}px 0px`,
@@ -25,7 +34,7 @@
 
 <template>
     <div class="portrait-container">
-        <div class="stack">
+        <div class="stack" @mouseenter="$emit('hover')">
             <div class="frame" />
             <div v-if="isHovered" class="highlight" :style="highlightStyle" />
         </div>

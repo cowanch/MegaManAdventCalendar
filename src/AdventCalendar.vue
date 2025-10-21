@@ -6,12 +6,18 @@
     const containerClassObject = computed(() => ({
         "column-gap": `${28 * sizeMultiplier.value}px`,
         // "row-gap": `${16 * sizeMultiplier.value}px`,
-    }))
+    }));
+
+    const highlightKey = ref(13);
+
+    function onPortraitHover(index: number) {
+        highlightKey.value = index;
+    }
 </script>
 
 <template>
     <div class="container" :style="containerClassObject">
-        <Portrait class="portrait" v-for="y in 25" :key="y" :sizeMultiplier="sizeMultiplier" :is-hovered="y === 13" />
+        <Portrait class="portrait" v-for="y in 25" :key="y" :sizeMultiplier="sizeMultiplier" :is-hovered="y === highlightKey" @hover="onPortraitHover(y)" />
     </div>
 </template>
 
