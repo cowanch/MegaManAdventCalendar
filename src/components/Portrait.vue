@@ -1,14 +1,21 @@
 <script setup lang="ts">
-    import { computed, ref, watch } from 'vue';
-    import TextDisplay from './TextDisplay.vue';
-    import { RobotMasterId, type RobotMasterProfile } from '@/constants/profiles';
+    import { computed, ref, watch } from "vue";
+    import TextDisplay from "./TextDisplay.vue";
+    import { ERobotMasterId } from "@/enums/ERobotMasterId";
+    import { ELookState } from "@/enums/ELookState";
+    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
 
     interface Props {
-        profile?: RobotMasterProfile;
+        profile?: IRobotMasterProfile;
         isHovered?: boolean;
+        lookState?: ELookState;
     }
 
-    const { isHovered = false, profile } = defineProps<Props>();
+    const {
+        profile,
+        isHovered = false,
+        lookState
+    } = defineProps<Props>();
 
     const animFrame = ref(0);
     const frameRate = 8; // frames per second
@@ -42,11 +49,11 @@
             return {};
         }
         let index: number;
-        if (profile.id === RobotMasterId.DLN001) {
+        if (profile.id === ERobotMasterId.DLN001) {
             // Special case for Mega Man
-            index = 4;
+            index = lookState ?? ELookState.Neutral;
         } else {
-            index = profile.id + 6;
+            index = profile.id + (9 - ERobotMasterId.DLN003);
         }
         const x = (index % 11) * 96;
         const y = Math.floor(index / 11) * 96;
@@ -65,7 +72,7 @@
             <div v-if="isHovered" class="highlight" :style="highlightStyle" />
             <div v-if="profile" class="portrait-image" :style="imageStyle" />
         </div>
-        <TextDisplay v-if="profile" :text="profile.name" style="margin-left: 6px;" />
+        <TextDisplay v-if="profile && profile.id != ERobotMasterId.DLN001" :text="profile.name" style="margin-left: 6px;" />
     </div>
 </template>
 

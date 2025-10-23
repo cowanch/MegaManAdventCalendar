@@ -1,173 +1,135 @@
-export interface RobotMasterProfile {
-    id: RobotMasterId;
-    name: string;
-};
+import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
+import { ERobotMasterId } from "@/enums/ERobotMasterId";
 
-export enum RobotMasterId {
-    DLN000, // ProtoMan - not used in advent calendar
-    DLN001,
-    DLN002, // Roll - not used in advent calendar
-    DLN003,
-    DLN004,
-    DLN005,
-    DLN006,
-    DLN007,
-    DLN008,
-    DWN009,
-    DWN010,
-    DWN011,
-    DWN012,
-    DWN013,
-    DWN014,
-    DWN015,
-    DWN016,
-    DWN017,
-    DWN018,
-    DWN019,
-    DWN020,
-    DWN021,
-    DWN022,
-    DWN023,
-    DWN024,
-    DWN025,
-    DWN026,
-    DWN027,
-    DWN028,
-    DWN029,
-    DWN030,
-    DWN031,
-    DWN032,
-}
-
-const profiles: RobotMasterProfile[] = [
+const profiles: IRobotMasterProfile[] = [
     {
-        id: RobotMasterId.DLN001,
+        id: ERobotMasterId.DLN001,
         name: "Mega Man",
     },
     {
-        id: RobotMasterId.DLN003,
+        id: ERobotMasterId.DLN003,
         name: "Cut Man",
     },
     {
-        id: RobotMasterId.DLN004,
+        id: ERobotMasterId.DLN004,
         name: "Guts Man",
     },
     {
-        id: RobotMasterId.DLN005,
+        id: ERobotMasterId.DLN005,
         name: "Ice Man",
     },
     {
-        id: RobotMasterId.DLN006,
+        id: ERobotMasterId.DLN006,
         name: "Bomb Man",
     },
     {
-        id: RobotMasterId.DLN007,
+        id: ERobotMasterId.DLN007,
         name: "Fire Man",
     },
     {
-        id: RobotMasterId.DLN008,
+        id: ERobotMasterId.DLN008,
         name: "Elec Man",
     },
     {
-        id: RobotMasterId.DWN009,
+        id: ERobotMasterId.DWN009,
         name: "Metal Man",
     },
     {
-        id: RobotMasterId.DWN010,
+        id: ERobotMasterId.DWN010,
         name: "Air Man",
     },
     {
-        id: RobotMasterId.DWN011,
+        id: ERobotMasterId.DWN011,
         name: "Bubble Man",
     },
     {
-        id: RobotMasterId.DWN012,
+        id: ERobotMasterId.DWN012,
         name: "Quick Man",
     },
     {
-        id: RobotMasterId.DWN013,
+        id: ERobotMasterId.DWN013,
         name: "Crash Man",
     },
     {
-        id: RobotMasterId.DWN014,
+        id: ERobotMasterId.DWN014,
         name: "Flash Man",
     },
     {
-        id: RobotMasterId.DWN015,
+        id: ERobotMasterId.DWN015,
         name: "Heat Man",
     },
     {
-        id: RobotMasterId.DWN016,
+        id: ERobotMasterId.DWN016,
         name: "Wood Man",
     },
     {
-        id: RobotMasterId.DWN017,
+        id: ERobotMasterId.DWN017,
         name: "Needle Man",
     },
     {
-        id: RobotMasterId.DWN018,
+        id: ERobotMasterId.DWN018,
         name: "Magnet Man",
     },
     {
-        id: RobotMasterId.DWN019,
+        id: ERobotMasterId.DWN019,
         name: "Gemini Man",
     },
     {
-        id: RobotMasterId.DWN020,
+        id: ERobotMasterId.DWN020,
         name: "Hard Man",
     },
     {
-        id: RobotMasterId.DWN021,
+        id: ERobotMasterId.DWN021,
         name: "Top Man",
     },
     {
-        id: RobotMasterId.DWN022,
+        id: ERobotMasterId.DWN022,
         name: "Snake Man",
     },
     {
-        id: RobotMasterId.DWN023,
+        id: ERobotMasterId.DWN023,
         name: "Spark Man",
     },
     {
-        id: RobotMasterId.DWN024,
+        id: ERobotMasterId.DWN024,
         name: "Shadow Man",
     },
     {
-        id: RobotMasterId.DWN025,
+        id: ERobotMasterId.DWN025,
         name: "Bright Man",
     },
     {
-        id: RobotMasterId.DWN026,
+        id: ERobotMasterId.DWN026,
         name: "Toad Man",
     },
     {
-        id: RobotMasterId.DWN027,
+        id: ERobotMasterId.DWN027,
         name: "Drill Man",
     },
     {
-        id: RobotMasterId.DWN028,
+        id: ERobotMasterId.DWN028,
         name: "Pharaoh Man",
     },
     {
-        id: RobotMasterId.DWN029,
+        id: ERobotMasterId.DWN029,
         name: "Ring Man",
     },
     {
-        id: RobotMasterId.DWN030,
+        id: ERobotMasterId.DWN030,
         name: "Dust Man",
     },
     {
-        id: RobotMasterId.DWN031,
+        id: ERobotMasterId.DWN031,
         name: "Dive Man",
     },
     {
-        id: RobotMasterId.DWN032,
+        id: ERobotMasterId.DWN032,
         name: "Skull Man",
     },
 ]
 
-export function getRobotMasterProfiles(): Record<RobotMasterId, RobotMasterProfile> {
-    const profileMap: Record<RobotMasterId, RobotMasterProfile> = {} as Record<RobotMasterId, RobotMasterProfile>;
+export function GetRobotMasterProfiles(): Record<ERobotMasterId, IRobotMasterProfile> {
+    const profileMap: Record<ERobotMasterId, IRobotMasterProfile> = {} as Record<ERobotMasterId, IRobotMasterProfile>;
     profiles.forEach(profile => {
         profileMap[profile.id] = profile;
     });
