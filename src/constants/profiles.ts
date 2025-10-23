@@ -1,6 +1,14 @@
 import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
 import { ERobotMasterId } from "@/enums/ERobotMasterId";
 
+export function GetRobotMasterProfiles(): Record<ERobotMasterId, IRobotMasterProfile> {
+    const profileMap: Record<ERobotMasterId, IRobotMasterProfile> = {} as Record<ERobotMasterId, IRobotMasterProfile>;
+    profiles.forEach(profile => {
+        profileMap[profile.id] = profile;
+    });
+    return profileMap;
+};
+
 const profiles: IRobotMasterProfile[] = [
     {
         id: ERobotMasterId.DLN001,
@@ -126,12 +134,68 @@ const profiles: IRobotMasterProfile[] = [
         id: ERobotMasterId.DWN032,
         name: "Skull Man",
     },
-]
-
-export function GetRobotMasterProfiles(): Record<ERobotMasterId, IRobotMasterProfile> {
-    const profileMap: Record<ERobotMasterId, IRobotMasterProfile> = {} as Record<ERobotMasterId, IRobotMasterProfile>;
-    profiles.forEach(profile => {
-        profileMap[profile.id] = profile;
-    });
-    return profileMap;
-};
+    {
+        id: ERobotMasterId.DWN033,
+        name: "Gravity Man",
+    },
+    {
+        id: ERobotMasterId.DWN034,
+        name: "Wave Man",
+    },
+    {
+        id: ERobotMasterId.DWN035,
+        name: "Stone Man",
+    },
+    {
+        id: ERobotMasterId.DWN036,
+        name: "Gyro Man",
+    },
+    {
+        id: ERobotMasterId.DWN037,
+        name: "Star Man",
+    },
+    {
+        id: ERobotMasterId.DWN038,
+        name: "Charge Man",
+    },
+    {
+        id: ERobotMasterId.DWN039,
+        name: "Napalm Man",
+    },
+    {
+        id: ERobotMasterId.DWN040,
+        name: "Crystal Man",
+    },
+    {
+        id: ERobotMasterId.DWN041,
+        name: "Blizzard Man",
+    },
+    {
+        id: ERobotMasterId.DWN042,
+        name: "Centaur Man",
+    },
+    {
+        id: ERobotMasterId.DWN043,
+        name: "Flame Man",
+    },
+    {
+        id: ERobotMasterId.DWN044,
+        name: "Knight Man",
+    },
+    {
+        id: ERobotMasterId.DWN045,
+        name: "Plant Man",
+    },
+    {
+        id: ERobotMasterId.DWN046,
+        name: "Tomahawk Man",
+    },
+    {
+        id: ERobotMasterId.DWN047,
+        name: "Wind Man",
+    },
+    {
+        id: ERobotMasterId.DWN048,
+        name: "Yamato Man",
+    },
+];

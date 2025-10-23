@@ -52,13 +52,13 @@
 
     // Testing the available robot masters
     for (let i = 0; i < 12; i++) {
-        const profile = RobotMasterProfiles[(i + ERobotMasterId.DLN003) as ERobotMasterId];
+        const profile = RobotMasterProfiles[(i + ERobotMasterId.DWN025) as ERobotMasterId];
         if (profile) {
             profiles[i] = profile;
         }
     }
     for (let i = DLN001_INDEX + 1; i < profiles.length; i++) {
-        const profile = RobotMasterProfiles[(i - 1 + ERobotMasterId.DLN003) as ERobotMasterId];
+        const profile = RobotMasterProfiles[(i - 1 + ERobotMasterId.DWN025) as ERobotMasterId];
         if (profile) {
             profiles[i] = profile;
         }
