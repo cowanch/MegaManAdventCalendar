@@ -3,19 +3,14 @@
     import TextDisplay from "./TextDisplay.vue";
     import { ERobotMasterId } from "@/enums/ERobotMasterId";
     import { ELookState } from "@/enums/ELookState";
-    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
-
-    interface Props {
-        profile?: IRobotMasterProfile;
-        isHovered?: boolean;
-        lookState?: ELookState;
-    }
+    import type { IPortraitProps } from "@/interfaces/IPortraitProps";
 
     const {
         profile,
         isHovered = false,
-        lookState
-    } = defineProps<Props>();
+        lookState,
+        dayNumber,
+    } = defineProps<IPortraitProps>();
 
     const animFrame = ref(0);
     const frameRate = 8; // frames per second
@@ -59,6 +54,29 @@
         const y = Math.floor(index / 11) * 96;
         return { backgroundPosition: `-${x}px -${y}px` };
     });
+    const textStyle = computed(() => {
+        let margin = "0px";
+        if (dayNumber) {
+            return { marginLeft: "6px" };
+        } else if (profile) {
+            const firstWord = profile.name.split(" ")[0];
+            if (firstWord && firstWord.length <= 7) {
+                margin = "6px";
+            } else {
+                margin = "-18px";
+            }
+        }
+        return { marginLeft: margin };
+    });
+    const textDisplay = computed(() => {
+        if (dayNumber) {
+            return "?";
+        } else if (profile && profile.id != ERobotMasterId.DLN001) {
+            return profile.name;
+        } else {
+            return "";
+        }
+    });
 
     if (isHovered) {
         startAnimation();
@@ -70,9 +88,12 @@
         <div class="stack" @mouseenter="$emit('hover')">
             <div class="frame" />
             <div v-if="isHovered" class="highlight" :style="highlightStyle" />
-            <div v-if="profile" class="portrait-image" :style="imageStyle" />
+            <div v-if="dayNumber" class="portrait-number">
+                <TextDisplay :text="`${dayNumber}`" :centered="true" />
+            </div>
+            <div v-else-if="profile" class="portrait-image" :style="imageStyle" />
         </div>
-        <TextDisplay v-if="profile && profile.id != ERobotMasterId.DLN001" :text="profile.name" style="margin-left: 6px;" />
+        <TextDisplay v-if="textDisplay.length" :text="textDisplay" :style="textStyle" />
     </div>
 </template>
 
@@ -80,6 +101,8 @@
     .portrait-container {
         display: flex;
         flex-direction: column;
+        min-width: 174px;
+        min-height: 192px;
     }
     .stack {
         display: grid;
@@ -105,5 +128,10 @@
         height: 96px;
         z-index: 3;
         margin: 24px 30px;
+    }
+    .portrait-number {
+        z-index: 3;
+        align-content: center;
+        width: 156px;
     }
 </style>

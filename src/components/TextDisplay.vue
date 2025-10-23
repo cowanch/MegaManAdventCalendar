@@ -1,18 +1,24 @@
 <script setup lang="ts">
+    import { computed } from 'vue';
+
     interface Props {
         text: string;
+        centered?: boolean;
     }
 
-    const props = defineProps<Props>();
+    const {
+        text,
+        centered = false
+    } = defineProps<Props>();
 
-    const textParts = props.text.split(" ", 2);
+    const textParts = text.split(" ", 2);
     const word1: string = textParts[0] || "";
     const word2: string = textParts[1] || "";
 
     const word1Chars = word1.split("");
     const word2Chars = word2.split("");
     // Prepend some spaces to the second world so it aligns at the end of 6 characters
-    while (word2Chars.length < 6) {
+    while (word2Chars.length > 0 && word2Chars.length < (word1Chars.length > 7 ? 7 : 6)) {
         word2Chars.unshift(" ");
     }
 
@@ -25,6 +31,24 @@
         } else if (code >= 65 && code <= 90) {
             // 'A' to 'Z'
             index = code - 65 + 10;
+        } else if (code === 46) {
+            // '.'
+            index = 36;
+        } else if (code === 44) {
+            // ','
+            index = 37;
+        } else if (code === 39) {
+            // "'" (single quote)
+            index = 38;
+        } else if (code === 33) {
+            // '!' 
+            index = 39;
+        } else if (code === 58) {
+            // ':'
+            index = 41;
+        } else if (code === 63) {
+            // '?'
+            index = 43;
         } else {
             // Unsupported character, return position for blank
             return `-405px -54px`;
@@ -33,14 +57,18 @@
         const y = Math.floor(index / 16) * 27;
         return `-${x}px -${y}px`;
     }
+
+    const textContainerStyle = computed(() => ({
+        margin: centered ? "0 auto" : "0",
+    }));
 </script>
 
 <template>
-    <div>
+    <div class="text-container" :style="textContainerStyle">
         <div class="word-container">
             <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
         </div>
-        <div class="word-container">
+        <div v-if="word2Chars.length" class="word-container">
             <div class="text-display" v-for="(char, index) in word2Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
         </div>
     </div>
@@ -54,5 +82,8 @@
         width: 24px;
         height: 24px;
         background-image: url("../assets/img/LetterSet.png");
+    }
+    .text-container {
+        width: fit-content;
     }
 </style>

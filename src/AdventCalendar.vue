@@ -5,15 +5,11 @@
     import { ERobotMasterId } from "./enums/ERobotMasterId";
     import { ELookState } from "./enums/ELookState";
     import type { IRobotMasterProfile } from "./interfaces/IRobotMasterProfile";
+import type { IPortraitProps } from "./interfaces/IPortraitProps";
 
     const RobotMasterProfiles = GetRobotMasterProfiles();
     const DLN001_INDEX = 12;
 
-    const sizeMultiplier = ref(3);
-    const containerClassObject = computed(() => ({
-        "column-gap": `${28 * sizeMultiplier.value}px`,
-        // "row-gap": `${16 * sizeMultiplier.value}px`,
-    }));
     const lookState = computed(() => {
         if ([10, 11].includes(highlightKey.value)) {
             return ELookState.Left;
@@ -43,35 +39,37 @@
     }
 
     // Create an array of 25 profiles for demonstration purposes
-    const profiles: IRobotMasterProfile[] = Array.from({ length: 25 });
+    const portraitProps: IPortraitProps[] = Array.from({ length: 25 });
 
     const megaManProfile: IRobotMasterProfile | undefined = RobotMasterProfiles[ERobotMasterId.DLN001];
     if (megaManProfile) {
-        profiles[DLN001_INDEX] = megaManProfile;
+        portraitProps[DLN001_INDEX] = {
+            profile: megaManProfile,
+        };
     }
 
     // Testing the available robot masters
     for (let i = 0; i < 12; i++) {
-        const profile = RobotMasterProfiles[(i + ERobotMasterId.DWN025) as ERobotMasterId];
-        if (profile) {
-            profiles[i] = profile;
-        }
+        const dayNumber = i + 1;
+        portraitProps[i] = {
+            dayNumber,
+        };
     }
-    for (let i = DLN001_INDEX + 1; i < profiles.length; i++) {
+    for (let i = DLN001_INDEX + 1; i < portraitProps.length; i++) {
         const profile = RobotMasterProfiles[(i - 1 + ERobotMasterId.DWN025) as ERobotMasterId];
         if (profile) {
-            profiles[i] = profile;
+            portraitProps[i] = { profile };
         }
     }
 </script>
 
 <template>
-    <div class="container" :style="containerClassObject">
+    <div class="container">
         <Portrait 
-            v-for="(profile, index) in profiles"
+            v-for="(props, index) in portraitProps"
             :key="index"
             class="portrait"
-            :profile="profile"
+            v-bind="props"
             :is-hovered="index === highlightKey"
             :look-state="index === DLN001_INDEX ? lookState : undefined"
             @hover="onPortraitHover(index)" 
@@ -85,6 +83,7 @@
     grid-template-columns: repeat(5, min-content);
     grid-template-rows: repeat(5, min-content);
     justify-content: center;
+    column-gap: 66px;
 }
 .portrait {
     justify-self: center;
