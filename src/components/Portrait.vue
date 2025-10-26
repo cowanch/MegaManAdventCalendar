@@ -57,7 +57,7 @@
     const textStyle = computed(() => {
         let margin = "0px";
         if (dayNumber) {
-            return { marginLeft: "6px" };
+            return { margin: "0px 66px" };
         } else if (profile) {
             const firstWord = profile.name.split(" ")[0];
             if (firstWord && firstWord.length <= 7) {
