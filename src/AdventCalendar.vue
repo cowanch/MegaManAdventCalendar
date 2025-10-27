@@ -11,42 +11,52 @@
     const DLN001_INDEX = 12;
 
     const lookState = computed(() => {
-        if ([10, 11].includes(highlightKey.value)) {
+        const key = highlightKey.value;
+        if (key === null || key === DLN001_INDEX) {
+            return ELookState.Neutral;
+        } else if ([10, 11].includes(key)) {
             return ELookState.Left;
-        } else if ([13, 14].includes(highlightKey.value)) {
+        } else if ([13, 14].includes(key)) {
             return ELookState.Right;
-        } else if ([2, 7].includes(highlightKey.value)) {
+        } else if ([2, 7].includes(key)) {
             return ELookState.Up;
-        } else if ([17, 22].includes(highlightKey.value)) {
+        } else if ([17, 22].includes(key)) {
             return ELookState.Down;
-        } else if ([0, 1, 5, 6].includes(highlightKey.value)) {
+        } else if ([0, 1, 5, 6].includes(key)) {
             return ELookState.UpLeft;
-        } else if ([3, 4, 8, 9].includes(highlightKey.value)) {
+        } else if ([3, 4, 8, 9].includes(key)) {
             return ELookState.UpRight;
-        } else if ([15, 16, 20, 21].includes(highlightKey.value)) {
+        } else if ([15, 16, 20, 21].includes(key)) {
             return ELookState.DownLeft;
-        } else if ([18, 19, 23, 24].includes(highlightKey.value)) {
+        } else if ([18, 19, 23, 24].includes(key)) {
             return ELookState.DownRight;
         } else {
             return ELookState.Neutral;
         }
     });
 
-    const highlightKey = ref(-1);
-    const showCalendar = ref(false);
-    const initialized = ref(false);
+    const spriteBgPos = computed(() => {
+        const frame = spriteAnimFrame.value;
+        const x = (frame % 4) * 103 + 1;
+        const y = 0;
+        return `-${x}px 0px`;
+    });
+
+    const highlightKey = ref<number | null>(null);
+    const showCalendar = ref<boolean>(false);
+    const showPortraits = ref<boolean>(false);
+    const selectedIndex = ref<number | null>(null);
+    const spriteAnimFrame = ref<number>(0);
 
     // Create an array of 25 profiles for demonstration purposes
     const portraitProps: IPortraitProps[] = Array.from({ length: 25 });
 
     onMounted(() => {
         // Delay showing the calendar to allow for any initial animations
+        showCalendar.value = true;
         setTimeout(() => {
-            showCalendar.value = true;
-            setTimeout(() => {
-                initProfiles();
-            }, 3000);
-        }, 50);
+            initProfiles();
+        }, 2200);
     });
 
     function initProfiles() {
@@ -66,14 +76,7 @@
             };
         }
         highlightKey.value = DLN001_INDEX;
-        initialized.value = true;
-    }
-
-    function onPortraitHover(index: number) {
-        if (!initialized.value) {
-            return;
-        }
-        highlightKey.value = parseInt(`${index}`);  // Parsing the index to ensure it's a number
+        showPortraits.value = true;
     }
 
     function getRow(row: number): { [index: number] : IPortraitProps | undefined} {
@@ -83,9 +86,41 @@
         const rowObj: { [index: number] : IPortraitProps  | undefined} = {};
         for (let i = 0; i < 5; i++) {
             const index = (row - 1) * 5 + i;
-            rowObj[index] = portraitProps[index];
+            rowObj[index] = showPortraits.value ? portraitProps[index] : undefined;
         }
         return rowObj;
+    }
+
+    function onPortraitHover(index: number) {
+        if (!showPortraits.value) {
+            return;
+        }
+        highlightKey.value = parseInt(`${index}`);  // Parsing the index to ensure it's a number
+    }
+
+    function onPortraitClick(index: number) {
+        if (index == DLN001_INDEX || index === selectedIndex.value) {
+            return;
+        }
+        selectedIndex.value = index;
+        showPortraits.value = false;
+        highlightKey.value = -1;
+        requestAnimationFrame(() => {
+            showCalendar.value = false;
+            setTimeout(() => {
+                startSpriteAnimation();
+            }, 2200);
+        });
+    }
+
+    function startSpriteAnimation() {
+        console.log(`Call`);
+        setInterval(() => {
+            if (spriteAnimFrame.value >= 3) {
+                return;
+            }
+            spriteAnimFrame.value = (spriteAnimFrame.value + 1) % 4;
+        }, 100);
     }
 </script>
 
@@ -100,7 +135,14 @@
                 :is-hovered="index == highlightKey"
                 :look-state="index == DLN001_INDEX ? lookState : undefined"
                 @hover="onPortraitHover(index)"
+                @click="onPortraitClick(index)"
             />
+        </div>
+    </Transition>
+    <Transition name="enter-stage">
+        <div class="enter-stage" v-if="selectedIndex !== null">
+        <!-- <div class="enter-stage"> -->
+            <div class="sprite" :style="{backgroundPosition: spriteBgPos}" />
         </div>
     </Transition>
 </template>
@@ -116,15 +158,38 @@
 .portrait {
     justify-self: center;
 }
+.enter-stage {
+    background-color: #3CBCFC;
+    border-top: 6px solid #FCFCFC;
+    border-bottom: 6px solid #FCFCFC;
+    height: 228px;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    top: 344px;
+}
+.sprite {
+    background-image: url("./assets/img/sprite/DWN024.png");
+    width: 102px;
+    height: 96px;
+    background-position: -1px 0px;
+    margin: auto;
+}
 
 .even-enter-active,
-.odd-enter-active {
-    transition: all 2.5s linear;
+.odd-enter-active,
+.even-leave-active,
+.odd-leave-active,
+.enter-stage-enter-active {
+    transition: all 2s linear;
 }
-.odd-enter-from {
-    transform: translateX(-3050px);
+.odd-enter-from, 
+.even-leave-to,
+.enter-stage-enter-from {
+    transform: translateX(-100%);
 }
-.even-enter-from {
-    transform: translateX(3050px);
+.even-enter-from,
+.odd-leave-to {
+    transform: translateX(100%);
 }
 </style>

@@ -85,7 +85,7 @@
 
 <template>
     <div class="portrait-container">
-        <div class="stack" @mouseenter="$emit('hover')">
+        <div class="stack" @mouseenter="$emit('hover')" @click="$emit('click')">
             <div class="frame" />
             <div v-if="isHovered" class="highlight" :style="highlightStyle" />
             <div v-if="dayNumber" class="portrait-number">
