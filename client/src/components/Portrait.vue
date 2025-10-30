@@ -10,6 +10,7 @@
         isHovered = false,
         lookState,
         dayNumber,
+        revealed = false,
     } = defineProps<IPortraitProps>();
 
     const animFrame = ref(0);
@@ -56,7 +57,7 @@
     });
     const textStyle = computed(() => {
         let margin = "0px";
-        if (dayNumber) {
+        if (dayNumber && !revealed) {
             return { margin: "0px 66px" };
         } else if (profile) {
             const firstWord = profile.name.split(" ")[0];
@@ -69,7 +70,7 @@
         return { marginLeft: margin };
     });
     const textDisplay = computed(() => {
-        if (dayNumber) {
+        if (dayNumber && !revealed) {
             return "?";
         } else if (profile && profile.id != ERobotMasterId.DLN001) {
             return profile.name;
@@ -77,6 +78,7 @@
             return "";
         }
     });
+    const showPortrait = computed(() => !!profile && (!dayNumber || revealed))
 
     if (isHovered) {
         startAnimation();
@@ -88,10 +90,10 @@
         <div class="stack" @mouseenter="$emit('hover')" @click="$emit('click')">
             <div class="frame" />
             <div v-if="isHovered" class="highlight" :style="highlightStyle" />
-            <div v-if="dayNumber" class="portrait-number">
+            <div v-if="showPortrait" class="portrait-image" :style="imageStyle" />
+            <div v-else-if="dayNumber" class="portrait-number">
                 <TextDisplay :text="`${dayNumber}`" :centered="true" />
             </div>
-            <div v-else-if="profile" class="portrait-image" :style="imageStyle" />
         </div>
         <TextDisplay v-if="textDisplay.length" :text="textDisplay" :style="textStyle" />
     </div>

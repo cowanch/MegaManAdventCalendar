@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, onMounted, ref } from "vue";
+    import { computed, onMounted, ref, type Ref } from "vue";
     import Portrait from "./components/Portrait.vue";
     import { GetRobotMasterProfiles } from "./constants/profiles";
     import { ERobotMasterId } from "./enums/ERobotMasterId";
@@ -44,37 +44,40 @@
         return RobotMasterProfiles[ERobotMasterId.DWN023];
     });
 
+    const dayData = ref<{ day: number, id: number | undefined }[]>([]);
     const highlightKey = ref<number | null>(null);
     const showCalendar = ref<boolean>(false);
     const showPortraits = ref<boolean>(false);
     const selectedIndex = ref<number | null>(null);
 
     // Create an array of 25 profiles for demonstration purposes
-    const portraitProps: IPortraitProps[] = Array.from({ length: 25 });
-
-    onMounted(() => {
-        // Delay showing the calendar to allow for any initial animations
+    const portraitProps: Ref<IPortraitProps>[] = Array.from({ length: 25 }, () => ref<IPortraitProps>({}));
+    
+    onMounted(async () => {
+        const res = await fetch("http://localhost:3000/api/days");
+        dayData.value = await res.json();
         showCalendar.value = true;
         setTimeout(() => {
-            initProfiles();
+            initProfiles(dayData.value);
         }, 2200);
     });
 
-    function initProfiles() {
+    function initProfiles(dayData: { day: number, id: number | undefined }[]) {
         const megaManProfile: IRobotMasterProfile | undefined = RobotMasterProfiles[ERobotMasterId.DLN001];
-        if (megaManProfile) {
-            portraitProps[DLN001_INDEX] = {
-                profile: megaManProfile,
-            };
+        if (megaManProfile && portraitProps[DLN001_INDEX]) {
+            portraitProps[DLN001_INDEX].value.profile = megaManProfile;
         }
-        for (let i = 0; i < portraitProps.length; i++) {
-            if (i === DLN001_INDEX) {
-                continue;
+        for (const info of dayData) {
+            const propIdx = info.day <= DLN001_INDEX ? info.day - 1 : info.day;
+            if (portraitProps[propIdx]) {
+                portraitProps[propIdx].value.dayNumber = info.day;
+                if (info.id !== undefined) {
+                    const profile: IRobotMasterProfile | undefined = RobotMasterProfiles[info.id as ERobotMasterId];
+                    if (profile) {
+                        portraitProps[propIdx].value.profile = profile;
+                    }
+                }
             }
-            const dayNumber = i < DLN001_INDEX ? i + 1 : i;
-            portraitProps[i] = {
-                dayNumber,
-            };
         }
         highlightKey.value = DLN001_INDEX;
         showPortraits.value = true;
@@ -87,7 +90,9 @@
         const rowObj: { [index: number] : IPortraitProps  | undefined} = {};
         for (let i = 0; i < 5; i++) {
             const index = (row - 1) * 5 + i;
-            rowObj[index] = showPortraits.value ? portraitProps[index] : undefined;
+            if (portraitProps[index]) {
+                rowObj[index] = showPortraits.value ? portraitProps[index].value : undefined;
+            }
         }
         return rowObj;
     }
@@ -103,12 +108,16 @@
         if (index == DLN001_INDEX || index === selectedIndex.value) {
             return;
         }
-        selectedIndex.value = index;
-        showPortraits.value = false;
-        highlightKey.value = -1;
-        requestAnimationFrame(() => {
-            showCalendar.value = false;
-        });
+        if (portraitProps[index]) {
+            portraitProps[index].value.revealed = true;
+        }
+        // Comment out the animations for now
+        // selectedIndex.value = index;
+        // showPortraits.value = false;
+        // highlightKey.value = -1;
+        // requestAnimationFrame(() => {
+        //     showCalendar.value = false;
+        // });
     }
 </script>
 
