@@ -40,8 +40,8 @@
         if (selectedIndex.value === null) {
             return undefined;
         }
-        // return portraitProps[selectedIndex.value]?.profile;
-        return RobotMasterProfiles[ERobotMasterId.DWN023];
+        // return portraitProps[selectedIndex.value]?.value?.profile;
+        return RobotMasterProfiles[ERobotMasterId.DWN024];
     });
 
     const dayData = ref<{ day: number, id: number | undefined }[]>([]);
@@ -108,16 +108,16 @@
         if (index == DLN001_INDEX || index === selectedIndex.value) {
             return;
         }
-        if (portraitProps[index]) {
-            portraitProps[index].value.revealed = true;
-        }
+        // if (portraitProps[index]) {
+        //     portraitProps[index].value.revealed = true;
+        // }
         // Comment out the animations for now
-        // selectedIndex.value = index;
-        // showPortraits.value = false;
-        // highlightKey.value = -1;
-        // requestAnimationFrame(() => {
-        //     showCalendar.value = false;
-        // });
+        selectedIndex.value = index;
+        showPortraits.value = false;
+        highlightKey.value = -1;
+        requestAnimationFrame(() => {
+            showCalendar.value = false;
+        });
     }
 </script>
 

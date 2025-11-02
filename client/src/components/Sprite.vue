@@ -2,38 +2,51 @@
     import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
     import { computed, ref } from "vue";
     import gsap from "gsap";
+    import { getGameInfo } from "@/utils/gameInfo";
 
     interface Props {
         profile?: IRobotMasterProfile;
-        frame?: number;
     }
 
     const {
         profile,
-        frame,
     } = defineProps<Props>();
 
     const spriteAnimFrame = ref<number>(0);
 
+    const gameInfo = computed(() => {
+        return profile ? getGameInfo(profile.id) : null;
+    });
+
     const backgroundPosition = computed(() => {
-        const animFrames = profile?.animation || [];
-        const frame = animFrames[spriteAnimFrame.value];
-        if (frame) {
-            console.log(frame);
-            const x = (frame % animFrames.length) * 133;
-            return `-${x}px 0px`;
+        if (profile && gameInfo.value) {
+            const animFrames = profile?.animation || [];
+            const frame = animFrames[spriteAnimFrame.value];
+            if (frame != undefined) {
+                const x = (frame % animFrames.length) * (profile.spriteWidth + 1);
+                const y = gameInfo.value?.index * (gameInfo.value?.spriteHeight + 1)
+                return `-${x}px -${y}px`;
+            }
         }
         return "";
     });
 
+    const spriteStyle = computed(() => {
+        return {
+            // backgroundImage: `url("../assets/img/sprite/MM3_Sprites.png")`,
+            backgroundPosition: backgroundPosition.value,
+            width: `${profile?.spriteWidth}px`,
+            height: `${gameInfo.value?.spriteHeight}px`,
+        }
+    });
+
     function startAnimation() {
         const animLength = profile?.animation.length || 0;
-        setInterval(() => {
-            if (spriteAnimFrame.value >= animLength - 1) {
-                return;
-            }
+        const animInterval = setInterval(() => {
             spriteAnimFrame.value = (spriteAnimFrame.value + 1);
-            console.log(spriteAnimFrame.value);
+            if (spriteAnimFrame.value == animLength - 1) {
+                clearInterval(animInterval);
+            }
         }, 100);
     }
 
@@ -63,15 +76,13 @@
 
 <template>
     <Transition @before-enter="onBeforeEnter"  @enter="onEnter" @after-enter="onAfterEnter">
-        <div class="sprite" v-if="profile" :style="{backgroundPosition: backgroundPosition}" />
+        <div class="sprite" v-if="profile" :style="spriteStyle" />
     </Transition>
 </template>
 
 <style scoped>
     .sprite {
-        background-image: url("../assets/img/sprite/SparkMan.png");
-        width: 132px;
-        height: 129px;
+        background-image: url("../assets/img/sprite/MM3_Sprites.png");
         margin: auto;
         position: absolute;
         bottom: 446px;
