@@ -6,7 +6,7 @@
     import { ELookState } from "./enums/ELookState";
     import type { IRobotMasterProfile } from "./interfaces/IRobotMasterProfile";
     import type { IPortraitProps } from "./interfaces/IPortraitProps";
-    import Sprite from "./components/Sprite.vue";
+    import Intro from "./components/Intro.vue"
 
     const RobotMasterProfiles: Record<ERobotMasterId, IRobotMasterProfile> = GetRobotMasterProfiles();
     const DLN001_INDEX = 12;
@@ -136,10 +136,7 @@
             />
         </div>
     </Transition>
-    <Transition name="enter-stage">
-        <div class="enter-stage" v-if="selectedIndex !== null" />
-    </Transition>
-    <Sprite :profile="selectedProfile" />
+    <Intro :profile="selectedProfile"/>
 </template>
 
 <style scoped>
@@ -153,27 +150,15 @@
     .portrait {
         justify-self: center;
     }
-    .enter-stage {
-        background-color: #3CBCFC;
-        border-top: 6px solid #FCFCFC;
-        border-bottom: 6px solid #FCFCFC;
-        height: 228px;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
-        top: 344px;
-    }
 
     .even-enter-active,
     .odd-enter-active,
     .even-leave-active,
-    .odd-leave-active,
-    .enter-stage-enter-active {
+    .odd-leave-active {
         transition: all 2s linear;
     }
     .odd-enter-from, 
-    .even-leave-to,
-    .enter-stage-enter-from {
+    .even-leave-to {
         transform: translateX(-100%);
     }
     .even-enter-from,

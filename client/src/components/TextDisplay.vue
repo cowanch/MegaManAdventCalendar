@@ -4,25 +4,31 @@
     interface Props {
         text: string;
         centered?: boolean;
+        singleLine?: boolean;
     }
 
     const {
         text,
-        centered = false
+        centered = false,
+        singleLine = false,
     } = defineProps<Props>();
 
     const word1Chars = computed<string[]>(() => {
-        const word1 = text.split(" ", 2)[0] || "";
+        const word1 = !singleLine ? text.split(" ", 2)[0] || "" : text;
         return word1.split("");
     });
     const word2Chars = computed<string[]>(() => {
-        const word2 = text.split(" ", 2)[1] || "";
-        const chars = word2.split("");
-        // Prepend some spaces to the second world so it aligns at the end of 6 characters
-        while (chars.length > 0 && chars.length < (word1Chars.value.length > 7 ? 7 : 6)) {
-            chars.unshift(" ");
+        if (!singleLine) {
+            const word2 = text.split(" ", 2)[1] || "";
+            const chars = word2.split("");
+            // Prepend some spaces to the second world so it aligns at the end of 6 characters
+            while (chars.length > 0 && chars.length < (word1Chars.value.length > 7 ? 7 : 6)) {
+                chars.unshift(" ");
+            }
+            return chars;
+        } else {
+            return [];
         }
-        return chars;
     });
 
     function getBackgroundPosition(char: string): string {

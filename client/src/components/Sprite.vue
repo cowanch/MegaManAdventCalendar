@@ -4,6 +4,8 @@
     import gsap from "gsap";
     import { getGameInfo } from "@/utils/gameInfo";
 
+    const emit = defineEmits(["anim-finished"]);
+
     interface Props {
         profile?: IRobotMasterProfile;
     }
@@ -46,6 +48,7 @@
             spriteAnimFrame.value = (spriteAnimFrame.value + 1);
             if (spriteAnimFrame.value == animLength - 1) {
                 clearInterval(animInterval);
+                emit("anim-finished");
             }
         }, 100);
     }
