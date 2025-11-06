@@ -5,12 +5,16 @@
         text: string;
         centered?: boolean;
         singleLine?: boolean;
+        isHovered?: boolean;
+        hoverable?: boolean;
     }
 
     const {
         text,
         centered = false,
         singleLine = false,
+        isHovered = false,
+        hoverable = false,
     } = defineProps<Props>();
 
     const word1Chars = computed<string[]>(() => {
@@ -74,8 +78,9 @@
 
 <template>
     <div class="text-container" :style="textContainerStyle">
-        <div class="word-container">
-            <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
+        <div class="word-container" @mouseenter="$emit('hover')">
+            <div class="menu-arrow" v-if="isHovered" />
+            <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char), cursor: hoverable ? 'pointer' : '' }" />
         </div>
         <div v-if="word2Chars.length" class="word-container">
             <div class="text-display" v-for="(char, index) in word2Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char) }" />
@@ -94,5 +99,12 @@
     }
     .text-container {
         width: fit-content;
+    }
+    .menu-arrow {
+        width: 24px;
+        height: 24px;
+        background-image: url("../assets/img/MenuArrow.png");
+        position: fixed;
+        transform: translate(-30px);
     }
 </style>

@@ -4,15 +4,23 @@
     import TextDisplay from './TextDisplay.vue';
     import { ref } from 'vue';
 
-    interface Props {
+    enum EOption {
+        COMPLETED = "Completed",
+        PASSWORD = "Password",
+        BACK = "Back",
+    }
+
+    interface IProps {
         profile?: IRobotMasterProfile;
     }
 
     const {
         profile = undefined
-    } = defineProps<Props>();
+    } = defineProps<IProps>();
 
     const name = ref<string>("");
+    const animDone = ref<boolean>(false);
+    const hoverId = ref<EOption>(EOption.BACK);
 
     function startAnimation() {
         if (profile) {
@@ -24,18 +32,35 @@
                 nameIdx++;
                 if (profile.name.length <= nameIdx) {
                     clearInterval(animInterval);
+                    setTimeout(() => {
+                        animDone.value = true;
+                    }, 1000);
                 }
             }, 100);
         }
+    }
+
+    function onHover(id: EOption) {
+        hoverId.value = id;
     }
 </script>
 
 <template>
     <Transition name="enter-stage">
         <div class="enter-stage" v-if="profile !== undefined">
+            <div class="game-title" >
+                <Transition name="side">
+                    <div class="game-title__img" v-if="animDone" />
+                </Transition>
+            </div>
             <div class="intro-text">
                 <TextDisplay :text="name" single-line />
             </div>
+            <Transition name="side">
+                <div class="options" v-if="animDone">
+                    <TextDisplay v-for="option in EOption" :key="option" :text="option" hoverable :isHovered="hoverId === option" @hover="onHover(option)" />
+                </div>
+            </Transition>
         </div>
     </Transition>
     <Sprite :profile="profile" @anim-finished="startAnimation" />
@@ -51,11 +76,32 @@
         width: 100%;
         z-index: -1;
         top: 344px;
+        display: grid;
+        grid-template-columns: repeat(3, 33%);
+        justify-content: center;
+    }
+    .game-title {
+        justify-self: center;
+        margin-top: 3%;
+    }
+    .game-title__img {
+        background-image: url("../assets/img/title/MM3_Title.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 300px;
     }
     .intro-text {
-        display: flex;
-        justify-content: center;
-        margin: 8%;
+        justify-self: center;
+        margin-bottom: 9%;
+        align-self: end;
+    }
+    .options {
+        display: grid;
+        grid-template-rows: repeat(3, min-content);
+        row-gap: 16px;
+        justify-self: center;
+        margin-top: 5%;
     }
 
     .enter-stage-enter-active {
@@ -63,5 +109,12 @@
     }
     .enter-stage-enter-from {
         transform: translateX(-100%);
+    }
+
+    .side-enter-from {
+        opacity: 0;
+    }
+    .side-enter-active {
+        transition: opacity 0.5s ease;
     }
 </style>
