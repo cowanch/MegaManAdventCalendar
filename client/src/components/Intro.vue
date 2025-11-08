@@ -56,7 +56,11 @@
                 });
                 break;
             case EOption.COMPLETED:
-                emit("complete");
+                name.value = "";
+                animDone.value = false;
+                requestAnimationFrame(() => {
+                    emit("complete");
+                });
                 break;
             case EOption.PASSWORD:
                 break;

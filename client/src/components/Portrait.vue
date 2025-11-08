@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, ref, watch } from "vue";
+    import { computed, ref, watch, type StyleValue } from "vue";
     import TextDisplay from "./TextDisplay.vue";
     import { ERobotMasterId } from "@/enums/ERobotMasterId";
     import { ELookState } from "@/enums/ELookState";
@@ -11,6 +11,7 @@
         lookState,
         dayNumber,
         revealed = false,
+        defeated = false,
     } = defineProps<IPortraitProps>();
 
     const animFrame = ref(0);
@@ -40,10 +41,12 @@
     const highlightStyle = computed(() => ({
         backgroundPosition: `-${animFrame.value * 156}px 0px`,
     }));
-    const imageStyle = computed(() => {
+    const imageStyle = computed<StyleValue>(() => {
         if (!profile) {
             return {};
         }
+        let style: StyleValue = {};
+        
         let index: number;
         if (profile.id === ERobotMasterId.DLN001) {
             // Special case for Mega Man
@@ -53,7 +56,13 @@
         }
         const x = (index % 11) * 96;
         const y = Math.floor(index / 11) * 96;
-        return { backgroundPosition: `-${x}px -${y}px` };
+        style.backgroundPosition = `-${x}px -${y}px`;
+        
+        if (defeated) {
+            style.filter = "grayscale(100%)";
+        }
+
+        return style;
     });
     const textStyle = computed(() => {
         let margin = "0px";

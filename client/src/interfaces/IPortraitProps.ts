@@ -7,4 +7,5 @@ export interface IPortraitProps {
     isHovered?: boolean;
     lookState?: ELookState;
     revealed?: boolean;
+    defeated?: boolean;
 };

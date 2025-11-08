@@ -7,13 +7,15 @@
     import type { IRobotMasterProfile } from "./interfaces/IRobotMasterProfile";
     import type { IPortraitProps } from "./interfaces/IPortraitProps";
     import Intro from "./components/Intro.vue"
+    import { COMPLETION_STATE_LS_KEY, type ICompletionState } from "./interfaces/ICompletionState";
 
     const RobotMasterProfiles: Record<ERobotMasterId, IRobotMasterProfile> = GetRobotMasterProfiles();
     const DLN001_INDEX = 12;
+    const CompletionState: ICompletionState = JSON.parse(localStorage.getItem(COMPLETION_STATE_LS_KEY) || "{}");
 
     const lookState = computed(() => {
         const key = highlightKey.value;
-        if (key === null || key === DLN001_INDEX) {
+        if (key === undefined || key === DLN001_INDEX) {
             return ELookState.Neutral;
         } else if ([10, 11].includes(key)) {
             return ELookState.Left;
@@ -36,22 +38,32 @@
         }
     });
 
-    const selectedProfile = computed<IRobotMasterProfile | undefined>(() => {
-        if (selectedIndex.value === null) {
-            return undefined;
+    const selectedProp = computed<IPortraitProps | undefined>(() => {
+        if (selectedIndex.value) {
+            return portraitProps[selectedIndex.value]?.value;
         }
-        // return portraitProps[selectedIndex.value]?.value?.profile;
-        return RobotMasterProfiles[ERobotMasterId.DWN024];
+        return undefined;
+    });
+
+    const selectedProfile = computed<IRobotMasterProfile | undefined>(() => {
+        if (selectedProp.value) {
+            // return selectedProp.value?.profile;
+            return RobotMasterProfiles[ERobotMasterId.DWN024];
+        }
+        return undefined;
     });
 
     const dayData = ref<{ day: number, id: number | undefined }[]>([]);
-    const highlightKey = ref<number | null>(null);
+    const highlightKey = ref<number | undefined>(undefined);
     const showCalendar = ref<boolean>(false);
     const showPortraits = ref<boolean>(false);
-    const selectedIndex = ref<number | null>(null);
+    const selectedIndex = ref<number | undefined>(undefined);
 
     // Create an array of 25 profiles for demonstration purposes
-    const portraitProps: Ref<IPortraitProps>[] = Array.from({ length: 25 }, () => ref<IPortraitProps>({}));
+    const portraitProps: Ref<IPortraitProps>[] = Array.from({ length: 25 }, () => ref<IPortraitProps>({
+        revealed: false,
+        defeated: false,
+    }));
     
     onMounted(async () => {
         const res = await fetch("http://localhost:3000/api/days");
@@ -82,6 +94,12 @@
                         portraitProps[propIdx].value.profile = profile;
                     }
                 }
+                const frameState = CompletionState[info.day];
+                if (frameState) {
+                    const { revealed, defeated } = frameState;
+                    portraitProps[propIdx].value.revealed = revealed;
+                    portraitProps[propIdx].value.defeated = defeated;
+                }
             }
         }
         reset();
@@ -101,6 +119,21 @@
         return rowObj;
     }
 
+    function changeCompletionState(prop: IPortraitProps, revealedState: boolean | undefined, defeatedState: boolean | undefined) {
+        const day = prop.dayNumber;
+        const revealed = revealedState || prop.revealed || false;
+        const defeated = defeatedState || prop.defeated || false;
+        if (day) {
+            CompletionState[day] = {
+                revealed,
+                defeated
+            };
+            localStorage.setItem(COMPLETION_STATE_LS_KEY, JSON.stringify(CompletionState));
+            prop.revealed = revealed;
+            prop.defeated = defeated;
+        }
+    }
+
     function onPortraitHover(index: number) {
         if (!showPortraits.value) {
             return;
@@ -109,23 +142,34 @@
     }
 
     function onPortraitClick(index: number) {
-        if (index == DLN001_INDEX || index === selectedIndex.value) {
+        if (index == DLN001_INDEX || index === selectedIndex.value || portraitProps[index]?.value.defeated) {
             return;
         }
-        // if (portraitProps[index]) {
-        //     portraitProps[index].value.revealed = true;
-        // }
-        // Comment out the animations for now
         selectedIndex.value = index;
         showPortraits.value = false;
         highlightKey.value = -1;
         requestAnimationFrame(() => {
+            const day = selectedProp.value?.dayNumber;
+            if (day) {
+                changeCompletionState(selectedProp.value, true, false)
+            }
             showCalendar.value = false;
         });
     }
 
     function onIntroBack() {
-        selectedIndex.value = null;
+        selectedIndex.value = undefined;
+        showCalendar.value = true;
+        setTimeout(() => {
+            reset();
+        }, 2200);
+    }
+
+    function onIntroComplete() {
+        if (selectedProp.value) {
+            changeCompletionState(selectedProp.value, true, true);
+        }
+        selectedIndex.value = undefined;
         showCalendar.value = true;
         setTimeout(() => {
             reset();
@@ -148,7 +192,7 @@
             />
         </div>
     </Transition>
-    <Intro :profile="selectedProfile" @back="onIntroBack"/>
+    <Intro :profile="selectedProfile" @back="onIntroBack" @complete="onIntroComplete"/>
 </template>
 
 <style scoped>
