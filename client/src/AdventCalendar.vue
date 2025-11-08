@@ -62,6 +62,11 @@
         }, 2200);
     });
 
+    function reset() {
+        highlightKey.value = DLN001_INDEX;
+        showPortraits.value = true;
+    }
+
     function initProfiles(dayData: { day: number, id: number | undefined }[]) {
         const megaManProfile: IRobotMasterProfile | undefined = RobotMasterProfiles[ERobotMasterId.DLN001];
         if (megaManProfile && portraitProps[DLN001_INDEX]) {
@@ -79,8 +84,7 @@
                 }
             }
         }
-        highlightKey.value = DLN001_INDEX;
-        showPortraits.value = true;
+        reset();
     }
 
     function getRow(row: number): { [index: number] : IPortraitProps | undefined} {
@@ -119,6 +123,14 @@
             showCalendar.value = false;
         });
     }
+
+    function onIntroBack() {
+        selectedIndex.value = null;
+        showCalendar.value = true;
+        setTimeout(() => {
+            reset();
+        }, 2200);
+    }
 </script>
 
 <template>
@@ -136,7 +148,7 @@
             />
         </div>
     </Transition>
-    <Intro :profile="selectedProfile"/>
+    <Intro :profile="selectedProfile" @back="onIntroBack"/>
 </template>
 
 <style scoped>

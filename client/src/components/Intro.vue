@@ -4,6 +4,8 @@
     import TextDisplay from './TextDisplay.vue';
     import { ref } from 'vue';
 
+    const emit = defineEmits(["complete", "back"]);
+    
     enum EOption {
         COMPLETED = "Completed",
         PASSWORD = "Password",
@@ -40,8 +42,27 @@
         }
     }
 
-    function onHover(id: EOption) {
+    function onOptionHover(id: EOption) {
         hoverId.value = id;
+    }
+
+    function onOptionClick(id: EOption) {
+        switch(id) {
+            case EOption.BACK:
+                name.value = "";
+                animDone.value = false;
+                requestAnimationFrame(() => {
+                    emit("back");
+                });
+                break;
+            case EOption.COMPLETED:
+                emit("complete");
+                break;
+            case EOption.PASSWORD:
+                break;
+            default:
+                break;
+        }
     }
 </script>
 
@@ -58,7 +79,15 @@
             </div>
             <Transition name="side">
                 <div class="options" v-if="animDone">
-                    <TextDisplay v-for="option in EOption" :key="option" :text="option" hoverable :isHovered="hoverId === option" @hover="onHover(option)" />
+                    <TextDisplay 
+                        v-for="option in EOption"
+                        :key="option"
+                        :text="option"
+                        hoverable
+                        :isHovered="hoverId === option"
+                        @hover="onOptionHover(option)"
+                        @click="onOptionClick(option)"
+                    />
                 </div>
             </Transition>
         </div>
@@ -104,11 +133,15 @@
         margin-top: 5%;
     }
 
-    .enter-stage-enter-active {
+    .enter-stage-enter-active,
+    .enter-stage-leave-active {
         transition: all 2s linear;
     }
     .enter-stage-enter-from {
         transform: translateX(-100%);
+    }
+    .enter-stage-leave-to {
+        transform: translateX(100%);
     }
 
     .side-enter-from {

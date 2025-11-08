@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
-    import { computed, ref } from "vue";
+    import { computed, ref, watch } from "vue";
     import gsap from "gsap";
     import { getGameInfo } from "@/utils/gameInfo";
 
@@ -39,6 +39,14 @@
             backgroundPosition: backgroundPosition.value,
             width: `${profile?.spriteWidth}px`,
             height: `${gameInfo.value?.spriteHeight}px`,
+        }
+    });
+
+    watch(
+        () => profile,
+        (profile) => {
+        if (profile === undefined) {
+            spriteAnimFrame.value = 0;
         }
     });
 

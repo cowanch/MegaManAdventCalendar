@@ -77,8 +77,8 @@
 </script>
 
 <template>
-    <div class="text-container" :style="textContainerStyle">
-        <div class="word-container" @mouseenter="$emit('hover')">
+    <div class="text-container" :style="textContainerStyle" @mouseenter="$emit('hover')" @click="$emit('click')">
+        <div class="word-container">
             <div class="menu-arrow" v-if="isHovered" />
             <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char), cursor: hoverable ? 'pointer' : '' }" />
         </div>
