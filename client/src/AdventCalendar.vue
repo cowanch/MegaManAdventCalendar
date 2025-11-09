@@ -47,8 +47,11 @@
 
     const selectedProfile = computed<IRobotMasterProfile | undefined>(() => {
         if (selectedProp.value) {
-            // return selectedProp.value?.profile;
-            return RobotMasterProfiles[ERobotMasterId.DWN024];
+            const profile: IRobotMasterProfile | undefined = selectedProp.value?.profile;
+            if (profile?.animation.length) {
+                return profile;
+            }
+            return RobotMasterProfiles[ERobotMasterId.DWN023];
         }
         return undefined;
     });
@@ -84,24 +87,25 @@
         if (megaManProfile && portraitProps[DLN001_INDEX]) {
             portraitProps[DLN001_INDEX].value.profile = megaManProfile;
         }
-        for (const info of dayData) {
-            const propIdx = info.day <= DLN001_INDEX ? info.day - 1 : info.day;
-            if (portraitProps[propIdx]) {
-                portraitProps[propIdx].value.dayNumber = info.day;
-                if (info.id !== undefined) {
-                    const profile: IRobotMasterProfile | undefined = RobotMasterProfiles[info.id as ERobotMasterId];
+        dayData.forEach((info, index) => {
+            const propIdx = index < DLN001_INDEX ? index : index + 1;
+            const prop = portraitProps[propIdx];
+            if (prop) {
+                prop.value.dayNumber = info.day;
+                if (info.id) {
+                    const profile = RobotMasterProfiles[info.id as ERobotMasterId];
                     if (profile) {
-                        portraitProps[propIdx].value.profile = profile;
+                        prop.value.profile = profile;
                     }
                 }
                 const frameState = CompletionState[info.day];
                 if (frameState) {
                     const { revealed, defeated } = frameState;
-                    portraitProps[propIdx].value.revealed = revealed;
-                    portraitProps[propIdx].value.defeated = defeated;
+                    prop.value.revealed = revealed;
+                    prop.value.defeated = defeated;
                 }
             }
-        }
+        });
         reset();
     }
 
@@ -142,7 +146,10 @@
     }
 
     function onPortraitClick(index: number) {
-        if (index == DLN001_INDEX || index === selectedIndex.value || portraitProps[index]?.value.defeated) {
+        if (index == DLN001_INDEX 
+            || index === selectedIndex.value 
+            || portraitProps[index]?.value.defeated
+            || !portraitProps[index]?.value.profile) {
             return;
         }
         selectedIndex.value = index;

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { pseudoRandom } from "./utils/pseudo-random";
+import { pseudoRandom, seededShuffle } from "./utils/pseudo-random";
 
 const app = express();
 const PORT = 3000;
@@ -15,17 +15,23 @@ app.get("/api/hello", (_, res) => {
 app.get("/api/days", (_, res) => {
     const usedIds = new Set<number>();
     const generator = pseudoRandom(1);
-    const days: { day: number, id: number }[] = [];
+    const days: { day: number, id: number | undefined }[] = [];
+    const today = new Date();
+    const currentDay = today.getDate();
+    const christmasDay = new Date(2025, 12, 25);
     for (let day = 1; day < 25; day++) {
         const randomValue = generator();
-        const id = (randomValue % 46) + 3;
-        if (usedIds.has(id)) {
+        const id = (today > christmasDay || day <= currentDay) ? (randomValue % 46) + 3 : undefined;
+        if (id && usedIds.has(id)) {
             day--;
             continue;
         }
-        days.push({ day: day, id });
-        usedIds.add(id);
+        days.push({ day, id });
+        if (id) {
+            usedIds.add(id);
+        }
     }
+    seededShuffle(days, 2);
     res.json(days);
 });
 
