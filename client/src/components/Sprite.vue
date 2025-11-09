@@ -33,12 +33,19 @@
         return "";
     });
 
+    const leftPosition = computed(() => {
+        const screenWidth = window.screen.availWidth;
+        const spriteWidth = profile?.spriteWidth ?? 0;
+        return (screenWidth - spriteWidth) / 2;
+    });
+
     const spriteStyle = computed(() => {
         return {
             // backgroundImage: `url("../assets/img/sprite/MM3_Sprites.png")`,
             backgroundPosition: backgroundPosition.value,
             width: `${profile?.spriteWidth}px`,
             height: `${gameInfo.value?.spriteHeight}px`,
+            left: `${leftPosition.value}px`,
         }
     });
 
@@ -96,8 +103,7 @@
         background-image: url("../assets/img/sprite/MM3_Sprites.png");
         margin: auto;
         position: absolute;
-        bottom: 446px;
-        left: 894px;
+        bottom: 450px;
         z-index: 3;
     }
 </style>

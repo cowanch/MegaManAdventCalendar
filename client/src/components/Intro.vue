@@ -3,6 +3,7 @@
     import Sprite from "./Sprite.vue";
     import TextDisplay from './TextDisplay.vue';
     import { ref } from 'vue';
+    import Explosion from './Explosion.vue';
 
     const emit = defineEmits(["complete", "back"]);
     
@@ -23,6 +24,7 @@
     const name = ref<string>("");
     const animDone = ref<boolean>(false);
     const hoverId = ref<EOption>(EOption.BACK);
+    const isExploding = ref<boolean>(false);
 
     function startAnimation() {
         if (profile) {
@@ -58,15 +60,19 @@
             case EOption.COMPLETED:
                 name.value = "";
                 animDone.value = false;
-                requestAnimationFrame(() => {
-                    emit("complete");
-                });
+                isExploding.value = true;
                 break;
             case EOption.PASSWORD:
                 break;
             default:
                 break;
         }
+    }
+
+    function onExplodeFinished() {
+        isExploding.value = false;
+        hoverId.value = EOption.BACK;
+        emit("complete");
     }
 </script>
 
@@ -96,7 +102,8 @@
             </Transition>
         </div>
     </Transition>
-    <Sprite :profile="profile" @anim-finished="startAnimation" />
+    <Sprite v-if="!isExploding" :profile="profile" @anim-finished="startAnimation" />
+    <Explosion v-else @explode-finished="onExplodeFinished" />
 </template>
 
 <style scoped>
