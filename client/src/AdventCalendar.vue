@@ -199,7 +199,12 @@
             />
         </div>
     </Transition>
-    <Intro :profile="selectedProfile" @back="onIntroBack" @complete="onIntroComplete"/>
+    <Intro
+        :profile="selectedProfile"
+        :frame-index="parseInt(`${selectedIndex}`)"
+        @back="onIntroBack"
+        @complete="onIntroComplete"
+    />
 </template>
 
 <style scoped>

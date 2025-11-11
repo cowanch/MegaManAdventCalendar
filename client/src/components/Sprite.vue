@@ -8,16 +8,22 @@
 
     interface Props {
         profile?: IRobotMasterProfile;
+        originPosition?: { x: number, y: number };
     }
 
     const {
         profile,
+        originPosition,
     } = defineProps<Props>();
 
     const spriteAnimFrame = ref<number>(0);
 
     const gameInfo = computed(() => {
-        return profile ? getGameInfo(profile.id) : null;
+        return profile ? getGameInfo(profile.id) : undefined;
+    });
+
+    const spriteHeight = computed(() => {
+        return gameInfo.value ? gameInfo.value.spriteHeight : 0;
     });
 
     const backgroundPosition = computed(() => {
@@ -34,9 +40,13 @@
     });
 
     const leftPosition = computed(() => {
-        const screenWidth = window.screen.availWidth;
+        const screenWidth = document.body.clientWidth;
         const spriteWidth = profile?.spriteWidth ?? 0;
         return (screenWidth - spriteWidth) / 2;
+    });
+
+    const topPosition = computed(() => {
+        return 470 - spriteHeight.value;
     });
 
     const spriteStyle = computed(() => {
@@ -46,6 +56,7 @@
             width: `${profile?.spriteWidth}px`,
             height: `${gameInfo.value?.spriteHeight}px`,
             left: `${leftPosition.value}px`,
+            top: `${topPosition.value}px`,
         }
     });
 
@@ -69,10 +80,12 @@
     }
 
     function onBeforeEnter(el: any) {
-        gsap.set(el, {
-            x: -261,
-            y: -336,
-        });
+        if (leftPosition && topPosition && originPosition) {
+            gsap.set(el, {
+                x: originPosition.x - leftPosition.value,
+                y: (originPosition.y - (spriteHeight.value - 96)) - topPosition.value,
+            });
+        }
     }
 
     function onEnter(el: any, done: () => void) {
@@ -103,7 +116,6 @@
         background-image: url("../assets/img/sprite/MM3_Sprites.png");
         margin: auto;
         position: absolute;
-        bottom: 450px;
         z-index: 3;
     }
 </style>

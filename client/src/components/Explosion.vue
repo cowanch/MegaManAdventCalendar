@@ -97,6 +97,6 @@
         background-image: url("../assets/img/Explosion.png");
         position: absolute;
         bottom: 450px;
-        z-index: 3;
+        z-index: 10;
     }
 </style>

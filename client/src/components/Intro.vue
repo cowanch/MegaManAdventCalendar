@@ -2,7 +2,7 @@
     import type { IRobotMasterProfile } from '@/interfaces/IRobotMasterProfile';
     import Sprite from "./Sprite.vue";
     import TextDisplay from './TextDisplay.vue';
-    import { ref } from 'vue';
+    import { computed, ref } from 'vue';
     import Explosion from './Explosion.vue';
 
     const emit = defineEmits(["complete", "back"]);
@@ -15,16 +15,27 @@
 
     interface IProps {
         profile?: IRobotMasterProfile;
+        frameIndex?: number,
     }
 
     const {
-        profile = undefined
+        profile = undefined,
+        frameIndex = undefined,
     } = defineProps<IProps>();
 
     const name = ref<string>("");
     const animDone = ref<boolean>(false);
     const hoverId = ref<EOption>(EOption.BACK);
     const isExploding = ref<boolean>(false);
+
+    const spriteOrigin = computed(() => {
+        if (frameIndex) {
+            const x = 450 + (frameIndex % 5) * 240;
+            const y = (32 + Math.floor(frameIndex / 5) * 192);
+            return { x, y };
+        }
+        return undefined;
+    });
 
     function startAnimation() {
         if (profile) {
@@ -102,7 +113,12 @@
             </Transition>
         </div>
     </Transition>
-    <Sprite v-if="!isExploding" :profile="profile" @anim-finished="startAnimation" />
+    <Sprite
+        v-if="!isExploding"
+        :profile="profile"
+        :origin-position="spriteOrigin"
+        @anim-finished="startAnimation"
+    />
     <Explosion v-else @explode-finished="onExplodeFinished" />
 </template>
 
