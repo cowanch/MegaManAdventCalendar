@@ -29,9 +29,9 @@ function getSpriteHeightForGame(game: number): number {
         case 4:
             return 0;
         case 5:
-            return 0;
+            return 180;
         case 6:
-            return 0;
+            return 144;
         default:
             return 0;
     };

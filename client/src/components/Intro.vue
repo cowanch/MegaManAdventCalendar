@@ -4,7 +4,17 @@
     import TextDisplay from './TextDisplay.vue';
     import { computed, ref } from 'vue';
     import Explosion from './Explosion.vue';
+    import { getGameInfo } from '@/utils/gameInfo';
 
+    const titleImages: URL[] = [
+        new URL("@/assets/img/title/MM1_Title.png", import.meta.url),
+        new URL("@/assets/img/title/MM2_Title.png", import.meta.url),
+        new URL("@/assets/img/title/MM3_Title.png", import.meta.url),
+        new URL("@/assets/img/title/MM4_Title.png", import.meta.url),
+        new URL("@/assets/img/title/MM5_Title.png", import.meta.url),
+        new URL("@/assets/img/title/MM6_Title.png", import.meta.url),
+    ];
+    
     const emit = defineEmits(["complete", "back"]);
     
     enum EOption {
@@ -28,6 +38,10 @@
     const hoverId = ref<EOption>(EOption.BACK);
     const isExploding = ref<boolean>(false);
 
+    const gameInfo = computed(() => {
+        return profile ? getGameInfo(profile.id) : undefined;
+    });
+
     const spriteOrigin = computed(() => {
         if (frameIndex) {
             const x = 450 + (frameIndex % 5) * 240;
@@ -35,6 +49,13 @@
             return { x, y };
         }
         return undefined;
+    });
+
+    const gameTitleStyle = computed(() => {
+        const bgImg = (gameInfo.value) ? titleImages[gameInfo.value.game - 1]?.href : "";
+        return {
+            backgroundImage: `url(${bgImg})`,
+        }
     });
 
     function startAnimation() {
@@ -92,7 +113,7 @@
         <div class="enter-stage" v-if="profile !== undefined">
             <div class="game-title" >
                 <Transition name="side">
-                    <div class="game-title__img" v-if="animDone" />
+                    <div class="game-title__img" :style="gameTitleStyle" v-if="animDone" />
                 </Transition>
             </div>
             <div class="intro-text">
@@ -141,7 +162,6 @@
         margin-top: 3%;
     }
     .game-title__img {
-        background-image: url("../assets/img/title/MM3_Title.png");
         background-size: contain;
         background-repeat: no-repeat;
         height: 100%;

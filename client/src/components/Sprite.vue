@@ -4,6 +4,15 @@
     import gsap from "gsap";
     import { getGameInfo } from "@/utils/gameInfo";
 
+    const spriteSheets: URL[] = [
+        new URL("@/assets/img/sprite/MM1_Sprites.png", import.meta.url),
+        new URL("@/assets/img/sprite/MM2_Sprites.png", import.meta.url),
+        new URL("@/assets/img/sprite/MM3_Sprites.png", import.meta.url),
+        new URL("@/assets/img/sprite/MM4_Sprites.png", import.meta.url),
+        new URL("@/assets/img/sprite/MM5_Sprites.png", import.meta.url),
+        new URL("@/assets/img/sprite/MM6_Sprites.png", import.meta.url),
+    ];
+
     const emit = defineEmits(["anim-finished"]);
 
     interface Props {
@@ -50,8 +59,9 @@
     });
 
     const spriteStyle = computed(() => {
+        const bgImg = (gameInfo.value) ? spriteSheets[gameInfo.value.game - 1]?.href : "";
         return {
-            // backgroundImage: `url("../assets/img/sprite/MM3_Sprites.png")`,
+            backgroundImage: `url(${bgImg})`,
             backgroundPosition: backgroundPosition.value,
             width: `${profile?.spriteWidth}px`,
             height: `${gameInfo.value?.spriteHeight}px`,
@@ -107,13 +117,12 @@
 
 <template>
     <Transition @before-enter="onBeforeEnter"  @enter="onEnter" @after-enter="onAfterEnter">
-        <div class="sprite" v-if="profile" :style="spriteStyle" />
+        <div class="sprite" v-if="profile && gameInfo" :style="spriteStyle" />
     </Transition>
 </template>
 
 <style scoped>
     .sprite {
-        background-image: url("../assets/img/sprite/MM3_Sprites.png");
         margin: auto;
         position: absolute;
         z-index: 3;
