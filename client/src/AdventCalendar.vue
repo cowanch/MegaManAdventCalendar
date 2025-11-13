@@ -8,6 +8,8 @@
     import type { IPortraitProps } from "./interfaces/IPortraitProps";
     import Intro from "./components/Intro.vue"
     import { COMPLETION_STATE_LS_KEY, type ICompletionState } from "./interfaces/ICompletionState";
+    import type { IGameInfo } from "./interfaces/IGameInfo";
+    import { getGameInfo } from "./utils/gameInfo";
 
     const RobotMasterProfiles: Record<ERobotMasterId, IRobotMasterProfile> = GetRobotMasterProfiles();
     const DLN001_INDEX = 12;
@@ -52,6 +54,13 @@
                 return profile;
             }
             return RobotMasterProfiles[ERobotMasterId.DWN023];
+        }
+        return undefined;
+    });
+
+    const selectedGameInfo = computed<IGameInfo | undefined>(() => {
+        if (selectedProfile.value) {
+            return getGameInfo(selectedProfile.value.id);
         }
         return undefined;
     });
@@ -201,6 +210,7 @@
     </Transition>
     <Intro
         :profile="selectedProfile"
+        :game-info="selectedGameInfo"
         :frame-index="parseInt(`${selectedIndex}`)"
         @back="onIntroBack"
         @complete="onIntroComplete"

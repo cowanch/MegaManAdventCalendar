@@ -4,17 +4,9 @@
     import TextDisplay from './TextDisplay.vue';
     import { computed, ref } from 'vue';
     import Explosion from './Explosion.vue';
-    import { getGameInfo } from '@/utils/gameInfo';
+    import type { IGameInfo } from '@/interfaces/IGameInfo';
+    import { getTitle } from '@/utils/assetsLoader';
 
-    const titleImages: URL[] = [
-        new URL("@/assets/img/title/MM1_Title.png", import.meta.url),
-        new URL("@/assets/img/title/MM2_Title.png", import.meta.url),
-        new URL("@/assets/img/title/MM3_Title.png", import.meta.url),
-        new URL("@/assets/img/title/MM4_Title.png", import.meta.url),
-        new URL("@/assets/img/title/MM5_Title.png", import.meta.url),
-        new URL("@/assets/img/title/MM6_Title.png", import.meta.url),
-    ];
-    
     const emit = defineEmits(["complete", "back"]);
     
     enum EOption {
@@ -25,11 +17,13 @@
 
     interface IProps {
         profile?: IRobotMasterProfile;
+        gameInfo?: IGameInfo;
         frameIndex?: number,
     }
 
     const {
         profile = undefined,
+        gameInfo = undefined,
         frameIndex = undefined,
     } = defineProps<IProps>();
 
@@ -37,10 +31,6 @@
     const animDone = ref<boolean>(false);
     const hoverId = ref<EOption>(EOption.BACK);
     const isExploding = ref<boolean>(false);
-
-    const gameInfo = computed(() => {
-        return profile ? getGameInfo(profile.id) : undefined;
-    });
 
     const spriteOrigin = computed(() => {
         if (frameIndex) {
@@ -51,10 +41,15 @@
         return undefined;
     });
 
+    const gameTitle = computed(() => {
+        return gameInfo ? getTitle(gameInfo.game) : undefined;
+    });
+
     const gameTitleStyle = computed(() => {
-        const bgImg = (gameInfo.value) ? titleImages[gameInfo.value.game - 1]?.href : "";
-        return {
-            backgroundImage: `url(${bgImg})`,
+        if (gameTitle.value) {
+            return {
+                backgroundImage: `url(${gameTitle.value.url})`,
+            }
         }
     });
 
@@ -110,7 +105,7 @@
 
 <template>
     <Transition name="enter-stage">
-        <div class="enter-stage" v-if="profile !== undefined">
+        <div class="enter-stage" v-if="profile && gameInfo">
             <div class="game-title" >
                 <Transition name="side">
                     <div class="game-title__img" :style="gameTitleStyle" v-if="animDone" />
@@ -137,6 +132,7 @@
     <Sprite
         v-if="!isExploding"
         :profile="profile"
+        :game-info="gameInfo"
         :origin-position="spriteOrigin"
         @anim-finished="startAnimation"
     />

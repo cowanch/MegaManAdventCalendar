@@ -2,46 +2,40 @@
     import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
     import { computed, ref, watch } from "vue";
     import gsap from "gsap";
-    import { getGameInfo } from "@/utils/gameInfo";
-
-    const spriteSheets: URL[] = [
-        new URL("@/assets/img/sprite/MM1_Sprites.png", import.meta.url),
-        new URL("@/assets/img/sprite/MM2_Sprites.png", import.meta.url),
-        new URL("@/assets/img/sprite/MM3_Sprites.png", import.meta.url),
-        new URL("@/assets/img/sprite/MM4_Sprites.png", import.meta.url),
-        new URL("@/assets/img/sprite/MM5_Sprites.png", import.meta.url),
-        new URL("@/assets/img/sprite/MM6_Sprites.png", import.meta.url),
-    ];
+    import type { IGameInfo } from "@/interfaces/IGameInfo";
+    import { getSprite } from "@/utils/assetsLoader";
 
     const emit = defineEmits(["anim-finished"]);
 
     interface Props {
         profile?: IRobotMasterProfile;
+        gameInfo?: IGameInfo;
         originPosition?: { x: number, y: number };
     }
 
     const {
         profile,
+        gameInfo,
         originPosition,
     } = defineProps<Props>();
 
     const spriteAnimFrame = ref<number>(0);
 
-    const gameInfo = computed(() => {
-        return profile ? getGameInfo(profile.id) : undefined;
+    const spriteHeight = computed(() => {
+        return gameInfo ? gameInfo.spriteHeight : 0;
     });
 
-    const spriteHeight = computed(() => {
-        return gameInfo.value ? gameInfo.value.spriteHeight : 0;
+    const spriteSheet = computed(() => {
+        return gameInfo ? getSprite(gameInfo.game) : undefined;
     });
 
     const backgroundPosition = computed(() => {
-        if (profile && gameInfo.value) {
+        if (profile && gameInfo) {
             const animFrames = profile?.animation || [];
             const frame = animFrames[spriteAnimFrame.value];
             if (frame != undefined) {
                 const x = (frame % animFrames.length) * (profile.spriteWidth + 1);
-                const y = gameInfo.value?.index * (gameInfo.value?.spriteHeight + 1)
+                const y = gameInfo.index * (gameInfo.spriteHeight + 1);
                 return `-${x}px -${y}px`;
             }
         }
@@ -59,14 +53,15 @@
     });
 
     const spriteStyle = computed(() => {
-        const bgImg = (gameInfo.value) ? spriteSheets[gameInfo.value.game - 1]?.href : "";
-        return {
-            backgroundImage: `url(${bgImg})`,
-            backgroundPosition: backgroundPosition.value,
-            width: `${profile?.spriteWidth}px`,
-            height: `${gameInfo.value?.spriteHeight}px`,
-            left: `${leftPosition.value}px`,
-            top: `${topPosition.value}px`,
+        if (profile && gameInfo && spriteSheet.value) {
+            return {
+                backgroundImage: `url(${spriteSheet.value.url})`,
+                backgroundPosition: backgroundPosition.value,
+                width: `${profile.spriteWidth}px`,
+                height: `${gameInfo.spriteHeight}px`,
+                left: `${leftPosition.value}px`,
+                top: `${topPosition.value}px`,
+            }
         }
     });
 
@@ -117,7 +112,7 @@
 
 <template>
     <Transition @before-enter="onBeforeEnter"  @enter="onEnter" @after-enter="onAfterEnter">
-        <div class="sprite" v-if="profile && gameInfo" :style="spriteStyle" />
+        <div class="sprite" v-if="spriteStyle" :style="spriteStyle" />
     </Transition>
 </template>
 
