@@ -21,13 +21,13 @@ function getGameAndIndexForRobotId(id: ERobotMasterId): { game: number, index: n
 function getSpriteHeightForGame(game: number): number {
     switch (game) {
         case 1:
-            return 0;
+            return 150;
         case 2:
-            return 0;
+            return 96;
         case 3:
             return 129;
         case 4:
-            return 0;
+            return 120;
         case 5:
             return 180;
         case 6:

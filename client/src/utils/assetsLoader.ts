@@ -1,5 +1,6 @@
 const sprites: { [game: number]: { url: string, img: HTMLImageElement } } = {};
 const titles: { [game: number]: { url: string, img: HTMLImageElement } } = {};
+const images: { [name: string]: { url: string, img: HTMLImageElement } } = {};
 
 const pathes = [
     "img/sprite/MM1_Sprites.png",
@@ -14,6 +15,7 @@ const pathes = [
     "img/title/MM4_Title.png",
     "img/title/MM5_Title.png",
     "img/title/MM6_Title.png",
+    "img/Explosion.png",
 ];
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -39,6 +41,14 @@ export async function preloadAssets() {
                 } else if (path.includes("title")) {
                     titles[gameNumber] = { url, img };
                 }
+            } else {
+                const pathParts = path.split("/");
+                if (pathParts.length) {
+                    const name = pathParts[pathParts.length - 1]?.replace(".png", "");
+                    if (name) {
+                        images[name] = { url, img };
+                    }
+                }
             }
         })
     );
@@ -50,4 +60,8 @@ export function getSprite(game: number) {
 
 export function getTitle(game: number) {
     return titles[game];
+}
+
+export function getImage(name: string) {
+    return images[name];
 }

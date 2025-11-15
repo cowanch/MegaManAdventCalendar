@@ -49,11 +49,7 @@
 
     const selectedProfile = computed<IRobotMasterProfile | undefined>(() => {
         if (selectedProp.value) {
-            const profile: IRobotMasterProfile | undefined = selectedProp.value?.profile;
-            if (profile?.animation.length) {
-                return profile;
-            }
-            return RobotMasterProfiles[ERobotMasterId.DWN023];
+            return selectedProp.value?.profile;
         }
         return undefined;
     });

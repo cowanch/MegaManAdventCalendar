@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { computed, onMounted, ref, useTemplateRef } from 'vue';
     import gsap from "gsap";
+    import { getImage } from '@/utils/assetsLoader';
 
     const ANIM_LENGTH = 5;
     const SPIRTE_SIZE = 72;
@@ -23,11 +24,15 @@
     });
 
     const explosionStyle = computed(() => {
-        return {
-            backgroundPosition: backgroundPosition.value,
-            width: `${SPIRTE_SIZE}px`,
-            height: `${SPIRTE_SIZE}px`,
-            left: `${leftPosition.value}px`,
+        const bgImg = getImage("Explosion");
+        if (bgImg) {
+            return {
+                backgroundImage: `url(${bgImg.url})`,
+                backgroundPosition: backgroundPosition.value,
+                width: `${SPIRTE_SIZE}px`,
+                height: `${SPIRTE_SIZE}px`,
+                left: `${leftPosition.value}px`,
+            };
         }
     });
 
@@ -94,7 +99,6 @@
 
 <style scoped>
     .explosion {
-        background-image: url("../assets/img/Explosion.png");
         position: absolute;
         bottom: 450px;
         z-index: 10;
