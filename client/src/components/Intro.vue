@@ -6,6 +6,7 @@
     import Explosion from './Explosion.vue';
     import type { IGameInfo } from '@/interfaces/IGameInfo';
     import { getTitle } from '@/utils/assetsLoader';
+    import Password from './Password.vue';
 
     const emit = defineEmits(["complete", "back"]);
     
@@ -104,6 +105,7 @@
 </script>
 
 <template>
+    <Password :game="gameInfo?.game" :password="profile?.password"/>
     <Transition name="enter-stage">
         <div class="enter-stage" v-if="profile && gameInfo">
             <div class="game-title" >

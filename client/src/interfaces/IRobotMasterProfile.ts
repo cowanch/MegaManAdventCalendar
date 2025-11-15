@@ -1,3 +1,4 @@
+import type { EPasswordEntry } from "@/enums/EPasswordEntry";
 import { ERobotMasterId } from "@/enums/ERobotMasterId";
 
 export interface IRobotMasterProfile {
@@ -5,4 +6,5 @@ export interface IRobotMasterProfile {
     name: string;
     animation: number[];
     spriteWidth: number;
+    password: EPasswordEntry[];
 };
