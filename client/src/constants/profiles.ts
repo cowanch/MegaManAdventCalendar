@@ -201,223 +201,431 @@ const profiles: IRobotMasterProfile[] = [
         name: "Needle Man",
         animation: [0, 1, 0, 2, 3],
         spriteWidth: 126,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B5,
+            EPasswordEntry.BLUE_F4,
+            EPasswordEntry.RED_F5,
+        ],
     },
     {
         id: ERobotMasterId.DWN018,
         name: "Magnet Man",
         animation: [0, 1, 2, 3],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B5,
+            EPasswordEntry.RED_D3,
+            EPasswordEntry.BLUE_F4,
+        ],
     },
     {
         id: ERobotMasterId.DWN019,
         name: "Gemini Man",
         animation: [0, 1, 2, 3, 4, 2],
         spriteWidth: 102,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.RED_C4,
+            EPasswordEntry.BLUE_D3,
+            EPasswordEntry.BLUE_F4,
+        ],
     },
     {
         id: ERobotMasterId.DWN020,
         name: "Hard Man",
         animation: [0, 1, 2, 2, 1, 2, 2, 0],
         spriteWidth: 132,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.BLUE_D3,
+            EPasswordEntry.BLUE_F4,
+        ],
     },
     {
         id: ERobotMasterId.DWN021,
         name: "Top Man",
         animation: [0, 1, 2],
         spriteWidth: 93,
-        password: []
+        password: [
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B5,
+            EPasswordEntry.BLUE_D3,
+            EPasswordEntry.BLUE_F4,
+            EPasswordEntry.RED_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN022,
         name: "Snake Man",
         animation: [0, 1, 2],
         spriteWidth: 114,
-        password: []
+        password: [
+            EPasswordEntry.RED_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B5,
+            EPasswordEntry.BLUE_D3,
+            EPasswordEntry.BLUE_F4,
+        ],
     },
     {
         id: ERobotMasterId.DWN023,
         name: "Spark Man",
         animation: [0, 1, 2, 3, 4, 5, 4, 5, 1],
         spriteWidth: 132,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B5,
+            EPasswordEntry.BLUE_D3,
+            EPasswordEntry.RED_D6,
+        ],
     },
     {
         id: ERobotMasterId.DWN024,
         name: "Shadow Man",
         animation: [0, 1, 2, 3],
         spriteWidth: 105,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_A3,
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B5,
+            EPasswordEntry.BLUE_D3,
+            EPasswordEntry.RED_F4,
+        ],
     },
     {
         id: ERobotMasterId.DWN025,
         name: "Bright Man",
         animation: [0, 1, 2],
         spriteWidth: 93,
-        password: []
+        password: [
+            EPasswordEntry.RED_A4,
+            EPasswordEntry.RED_B1,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN026,
         name: "Toad Man",
         animation: [0, 1, 2],
         spriteWidth: 138,
-        password: []
+        password: [
+            EPasswordEntry.RED_A4,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_C2,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN027,
         name: "Drill Man",
         animation: [0, 1, 2],
         spriteWidth: 129,
-        password: []
+        password: [
+            EPasswordEntry.RED_A1,
+            EPasswordEntry.RED_B4,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN028,
         name: "Pharaoh Man",
         animation: [0, 1, 2],
         spriteWidth: 120,
-        password: []
+        password: [
+            EPasswordEntry.RED_A1,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_C3,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN029,
         name: "Ring Man",
         animation: [0, 1, 2, 3, 4, 5, 6],
         spriteWidth: 87,
-        password: []
+        password: [
+            EPasswordEntry.RED_A1,
+            EPasswordEntry.RED_A4,
+            EPasswordEntry.RED_C5,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN030,
         name: "Dust Man",
         animation: [0, 1, 2],
         spriteWidth: 102,
-        password: []
+        password: [
+            EPasswordEntry.RED_A1,
+            EPasswordEntry.RED_A4,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN031,
         name: "Dive Man",
         animation: [0, 1, 2],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.RED_A1,
+            EPasswordEntry.RED_A4,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F2,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN032,
         name: "Skull Man",
         animation: [0, 1, 2],
         spriteWidth: 84,
-        password: []
+        password: [
+            EPasswordEntry.RED_A1,
+            EPasswordEntry.RED_A4,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_E1,
+            EPasswordEntry.RED_E6,
+            EPasswordEntry.RED_F3,
+        ],
     },
     {
         id: ERobotMasterId.DWN033,
         name: "Gravity Man",
         animation: [0, 1, 2, 1, 2, 0, 1, 2, 1, 2, 3],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_B4,
+            EPasswordEntry.RED_C1,
+            EPasswordEntry.RED_C5,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.BLUE_F1,
+            EPasswordEntry.BLUE_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN034,
         name: "Wave Man",
         animation: [0, 1, 2, 2, 1, 3, 4, 5, 1],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.BLUE_B4,
+            EPasswordEntry.RED_C1,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.BLUE_F1,
+            EPasswordEntry.BLUE_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN035,
         name: "Stone Man",
         animation: [0, 1, 2, 3],
         spriteWidth: 126,
-        password: []
+        password: [
+            EPasswordEntry.RED_A5,
+            EPasswordEntry.BLUE_B4,
+            EPasswordEntry.RED_C1,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.BLUE_F1,
+            EPasswordEntry.BLUE_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN036,
         name: "Gyro Man",
         animation: [0, 1, 2, 3, 2, 1, 3, 2, 3, 2, 3, 2, 3, 2, 0],
         spriteWidth: 87,
-        password: []
+        password: [
+            EPasswordEntry.RED_A3,
+            EPasswordEntry.RED_C1,
+            EPasswordEntry.BLUE_D4,
+            EPasswordEntry.BLUE_D6,
+            EPasswordEntry.BLUE_F1,
+            EPasswordEntry.RED_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN037,
         name: "Star Man",
         animation: [0, 1, 2, 3, 4, 5, 6, 7, 5, 3],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.RED_C1,
+            EPasswordEntry.BLUE_D4,
+            EPasswordEntry.BLUE_D6,
+            EPasswordEntry.RED_E4,
+            EPasswordEntry.BLUE_F1,
+            EPasswordEntry.RED_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN038,
         name: "Charge Man",
         animation: [0, 1, 2, 3, 2, 1, 2, 0, 4, 5, 6, 7, 8, 9, 10, 4],
         spriteWidth: 87,
-        password: []
+        password: [
+            EPasswordEntry.RED_C1,
+            EPasswordEntry.BLUE_D4,
+            EPasswordEntry.BLUE_D6,
+            EPasswordEntry.RED_E3,
+            EPasswordEntry.BLUE_F1,
+            EPasswordEntry.RED_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN039,
         name: "Napalm Man",
         animation: [0, 1, 2, 3, 4, 3, 4, 3],
         spriteWidth: 117,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_B4,
+            EPasswordEntry.BLUE_C1,
+            EPasswordEntry.RED_D2,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.BLUE_D6,
+            EPasswordEntry.RED_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN040,
         name: "Crystal Man",
         animation: [0, 1, 2, 3, 4, 3, 4, 3],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.BLUE_B4,
+            EPasswordEntry.BLUE_C1,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.BLUE_D6,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_F6,
+        ],
     },
     {
         id: ERobotMasterId.DWN041,
         name: "Blizzard Man",
         animation: [0, 1, 2, 1, 3, 4, 5, 4, 3, 1, 2, 1, 3, 4, 6],
         spriteWidth: 147,
-        password: []
+        password: [
+            EPasswordEntry.RED_B1,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F2,
+        ],
     },
     {
         id: ERobotMasterId.DWN042,
         name: "Centaur Man",
         animation: [0, 1, 0, 2, 0, 1, 3],
         spriteWidth: 120,
-        password: []
+        password: [
+            EPasswordEntry.RED_B2,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_C4,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F2,
+        ],
     },
     {
         id: ERobotMasterId.DWN043,
         name: "Flame Man",
         animation: [0, 1, 2, 1, 3],
         spriteWidth: 96,
-        password: []
+        password: [
+            EPasswordEntry.RED_B2,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_D3,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F2,
+        ],
     },
     {
         id: ERobotMasterId.DWN044,
         name: "Knight Man",
         animation: [0, 1, 2, 3, 4, 3],
         spriteWidth: 162,
-        password: []
+        password: [
+            EPasswordEntry.RED_A6,
+            EPasswordEntry.RED_B2,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F2,
+        ],
     },
     {
         id: ERobotMasterId.DWN045,
         name: "Plant Man",
         animation: [0, 1, 2, 1, 3],
         spriteWidth: 108,
-        password: []
+        password: [
+            EPasswordEntry.RED_B2,
+            EPasswordEntry.RED_B5,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F2,
+        ],
     },
     {
         id: ERobotMasterId.DWN046,
         name: "Tomahawk Man",
         animation: [0, 1, 2, 3, 4],
         spriteWidth: 153,
-        password: []
+        password: [
+            EPasswordEntry.RED_A2,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F2,
+        ],
     },
     {
         id: ERobotMasterId.DWN047,
         name: "Wind Man",
         animation: [0, 1, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 1, 4],
         spriteWidth: 147,
-        password: []
+        password: [
+            EPasswordEntry.RED_B2,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.RED_E5,
+            EPasswordEntry.RED_F1,
+        ],
     },
     {
         id: ERobotMasterId.DWN048,
         name: "Yamato Man",
         animation: [0, 1, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 1],
         spriteWidth: 144,
-        password: []
+        password: [
+            EPasswordEntry.RED_B2,
+            EPasswordEntry.RED_B6,
+            EPasswordEntry.RED_D4,
+            EPasswordEntry.RED_E2,
+            EPasswordEntry.RED_E5,
+        ],
     },
 ];

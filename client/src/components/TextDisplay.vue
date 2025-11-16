@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { computed } from 'vue';
 
+    const emit = defineEmits(["click", "hover"]);
+
     interface Props {
         text: string;
         centered?: boolean;
@@ -34,6 +36,10 @@
             return [];
         }
     });
+
+    const textContainerStyle = computed(() => ({
+        margin: centered ? "0 auto" : "0",
+    }));
 
     function getBackgroundPosition(char: string): string {
         const code = char.toUpperCase().charCodeAt(0);
@@ -71,13 +77,17 @@
         return `-${x}px -${y}px`;
     }
 
-    const textContainerStyle = computed(() => ({
-        margin: centered ? "0 auto" : "0",
-    }));
+    function onHover() {
+        emit("hover");
+    }
+
+    function onClick() {
+        emit("click");
+    }
 </script>
 
 <template>
-    <div class="text-container" :style="textContainerStyle" @mouseenter="$emit('hover')" @click="$emit('click')">
+    <div class="text-container" :style="textContainerStyle" @mouseenter="onHover" @mousedown="onClick">
         <div class="word-container">
             <div class="menu-arrow" v-if="isHovered" />
             <div class="text-display" v-for="(char, index) in word1Chars" :key="index" :style="{ backgroundPosition: getBackgroundPosition(char), cursor: hoverable ? 'pointer' : '' }" />

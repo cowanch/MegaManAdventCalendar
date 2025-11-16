@@ -32,6 +32,7 @@
     const animDone = ref<boolean>(false);
     const hoverId = ref<EOption>(EOption.BACK);
     const isExploding = ref<boolean>(false);
+    const showPassword = ref<boolean>(false);
 
     const spriteOrigin = computed(() => {
         if (frameIndex !== undefined) {
@@ -52,6 +53,10 @@
                 backgroundImage: `url(${gameTitle.value.url})`,
             }
         }
+    });
+
+    const availableOptions = computed<EOption[]>(() => {
+        return Object.values(EOption).filter((opt) => opt !== EOption.PASSWORD || ( gameInfo && gameInfo.game > 1));
     });
 
     function startAnimation() {
@@ -81,6 +86,7 @@
             case EOption.BACK:
                 name.value = "";
                 animDone.value = false;
+                showPassword.value = false;
                 requestAnimationFrame(() => {
                     emit("back");
                 });
@@ -88,9 +94,11 @@
             case EOption.COMPLETED:
                 name.value = "";
                 animDone.value = false;
+                showPassword.value = false;
                 isExploding.value = true;
                 break;
             case EOption.PASSWORD:
+                showPassword.value = !showPassword.value;
                 break;
             default:
                 break;
@@ -105,7 +113,9 @@
 </script>
 
 <template>
-    <Password :game="gameInfo?.game" :password="profile?.password"/>
+    <Transition name="password">
+        <Password v-show="showPassword" :game="gameInfo?.game" :password="profile?.password"/>
+    </Transition>
     <Transition name="enter-stage">
         <div class="enter-stage" v-if="profile && gameInfo">
             <div class="game-title" >
@@ -119,7 +129,7 @@
             <Transition name="side">
                 <div class="options" v-if="animDone">
                     <TextDisplay 
-                        v-for="option in EOption"
+                        v-for="option in availableOptions"
                         :key="option"
                         :text="option"
                         hoverable
@@ -176,6 +186,15 @@
         row-gap: 16px;
         justify-self: center;
         margin-top: 5%;
+    }
+
+    .password-enter-from,
+    .password-leave-to {
+        transform: translate(400px);
+    }
+    .password-enter-active,
+    .password-leave-active {
+        transition: all 0.5s linear;
     }
 
     .enter-stage-enter-active,

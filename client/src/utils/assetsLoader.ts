@@ -1,8 +1,14 @@
+const passwordScreens: { [game: number]: { url: string, img: HTMLImageElement } } = {};
 const sprites: { [game: number]: { url: string, img: HTMLImageElement } } = {};
 const titles: { [game: number]: { url: string, img: HTMLImageElement } } = {};
 const images: { [name: string]: { url: string, img: HTMLImageElement } } = {};
 
 const pathes = [
+    "img/password/MM2_Password.png",
+    "img/password/MM3_Password.png",
+    "img/password/MM4_Password.png",
+    "img/password/MM5_Password.png",
+    "img/password/MM6_Password.png",
     "img/sprite/MM1_Sprites.png",
     "img/sprite/MM2_Sprites.png",
     "img/sprite/MM3_Sprites.png",
@@ -36,7 +42,9 @@ export async function preloadAssets() {
             const match = path.match(/\d+/);
             if (match) {
                 const gameNumber = parseInt(match[0], 10);
-                if (path.includes("sprite")) {
+                if (path.includes("password")) {
+                    passwordScreens[gameNumber] = { url, img };
+                } else if (path.includes("sprite")) {
                     sprites[gameNumber] = { url, img };
                 } else if (path.includes("title")) {
                     titles[gameNumber] = { url, img };
@@ -52,6 +60,10 @@ export async function preloadAssets() {
             }
         })
     );
+}
+
+export function getPasswordScreen(game: number) {
+    return passwordScreens[game];
 }
 
 export function getSprite(game: number) {

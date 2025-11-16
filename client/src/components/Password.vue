@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import type { EPasswordEntry } from '@/enums/EPasswordEntry';
+    import { getPasswordScreen } from '@/utils/assetsLoader';
     import { getPipMargins } from '@/utils/passwordPositioning';
     import { computed } from 'vue';
 
@@ -13,20 +14,25 @@
         password = undefined,
     } = defineProps<IProps>();
 
+    const passwordScreen = computed(() => {
+        return game ? getPasswordScreen(game) : undefined;
+    });
+
     const passwordStyle = computed(() => {
-        if (game) {
-            const bgImg = new URL(`../assets/img/password/MM${game}_Password.png`, import.meta.url).href;
+        if (passwordScreen.value) {
             return {
-                backgroundImage: `url(${bgImg})`,
+                backgroundImage: `url(${passwordScreen.value.url})`,
             };
         }
         return undefined;
     });
 
     function getPipStyle(entry: EPasswordEntry) {
+        const style = { backgroundPosition: `-${Math.floor(entry / 36) < 1 ? 0 : 24}px 0px` };
         if (game) {
-            return getPipMargins(game, entry);
+            Object.assign(style, getPipMargins(game, entry));
         }
+        return style;
     };
 </script>
 
