@@ -10,6 +10,7 @@
     import TextOptions from "./TextOptions.vue";
     import { useSound } from "@vueuse/sound";
     import explodeWav from "../assets/sound/Explode.wav";
+    import menuOpenWav from "../assets/sound/MenuOpen.wav";
 
     const emit = defineEmits(["complete", "back"]);
     
@@ -32,6 +33,7 @@
     } = defineProps<IProps>();
 
     const explodeSound = useSound(explodeWav);
+    const menuOpenSound = useSound(menuOpenWav);
 
     const name = ref<string>("");
     const animDone = ref<boolean>(false);
@@ -113,6 +115,7 @@
                 break;
             case EOption.PASSWORD:
                 showPassword.value = !showPassword.value;
+                menuOpenSound.play();
                 break;
             default:
                 break;
