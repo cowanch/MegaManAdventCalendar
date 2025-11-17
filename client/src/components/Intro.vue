@@ -1,12 +1,15 @@
 <script setup lang="ts">
-    import type { IRobotMasterProfile } from '@/interfaces/IRobotMasterProfile';
+    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
     import Sprite from "./Sprite.vue";
-    import TextDisplay from './TextDisplay.vue';
-    import { computed, ref } from 'vue';
-    import Explosion from './Explosion.vue';
-    import type { IGameInfo } from '@/interfaces/IGameInfo';
-    import { getTitle } from '@/utils/assetsLoader';
-    import Password from './Password.vue';
+    import TextDisplay from "./TextDisplay.vue";
+    import { computed, ref, watch } from "vue";
+    import Explosion from "./Explosion.vue";
+    import type { IGameInfo } from "@/interfaces/IGameInfo";
+    import { getTitle } from "@/utils/assetsLoader";
+    import Password from "./Password.vue";
+    import TextOptions from "./TextOptions.vue";
+    import { useSound } from "@vueuse/sound";
+    import explodeWav from "../assets/sound/Explode.wav";
 
     const emit = defineEmits(["complete", "back"]);
     
@@ -27,6 +30,8 @@
         gameInfo = undefined,
         frameIndex = undefined,
     } = defineProps<IProps>();
+
+    const explodeSound = useSound(explodeWav);
 
     const name = ref<string>("");
     const animDone = ref<boolean>(false);
@@ -57,6 +62,14 @@
 
     const availableOptions = computed<EOption[]>(() => {
         return Object.values(EOption).filter((opt) => opt !== EOption.PASSWORD || ( gameInfo && gameInfo.game > 1));
+    });
+
+    watch(
+        () => profile,
+        (profile) => {
+        if (profile !== undefined) {
+            
+        }
     });
 
     function startAnimation() {
@@ -96,6 +109,7 @@
                 animDone.value = false;
                 showPassword.value = false;
                 isExploding.value = true;
+                explodeSound.play();
                 break;
             case EOption.PASSWORD:
                 showPassword.value = !showPassword.value;
@@ -127,17 +141,13 @@
                 <TextDisplay :text="name" single-line />
             </div>
             <Transition name="side">
-                <div class="options" v-if="animDone">
-                    <TextDisplay 
-                        v-for="option in availableOptions"
-                        :key="option"
-                        :text="option"
-                        hoverable
-                        :isHovered="hoverId === option"
-                        @hover="onOptionHover(option)"
-                        @click="onOptionClick(option)"
-                    />
-                </div>
+                <TextOptions 
+                    v-if="animDone"
+                    :options="availableOptions"
+                    :hovered="hoverId"
+                    @hover="onOptionHover"
+                    @click="onOptionClick"
+                />
             </Transition>
         </div>
     </Transition>

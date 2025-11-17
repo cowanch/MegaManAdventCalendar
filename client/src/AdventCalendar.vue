@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, onMounted, ref, type Ref } from "vue";
+    import { computed, onMounted, ref, watch, type Ref } from "vue";
     import Portrait from "./components/Portrait.vue";
     import { GetRobotMasterProfiles } from "./constants/profiles";
     import { ERobotMasterId } from "./enums/ERobotMasterId";
@@ -10,10 +10,19 @@
     import { COMPLETION_STATE_LS_KEY, type ICompletionState } from "./interfaces/ICompletionState";
     import type { IGameInfo } from "./interfaces/IGameInfo";
     import { getGameInfo } from "./utils/gameInfo";
+    import { useSound } from "@vueuse/sound";
+    import hoverWav from "./assets/sound/Hover.wav";
+    import stageSelectMp3 from "./assets/sound/StageSelect.mp3";
+    import stageChosenMp3 from "./assets/sound/StageChosen.mp3";
+    import Title from "./components/Title.vue"
 
     const RobotMasterProfiles: Record<ERobotMasterId, IRobotMasterProfile> = GetRobotMasterProfiles();
     const DLN001_INDEX = 12;
     const CompletionState: ICompletionState = JSON.parse(localStorage.getItem(COMPLETION_STATE_LS_KEY) || "{}");
+
+    const hoverSound = useSound(hoverWav);
+    const stageSelectSound = useSound(stageSelectMp3);
+    const stageChosenSound = useSound(stageChosenMp3);
 
     const lookState = computed(() => {
         const key = highlightKey.value;
@@ -62,6 +71,7 @@
     });
 
     const dayData = ref<{ day: number, id: number | undefined }[]>([]);
+    const showTitle = ref<boolean>(true);
     const highlightKey = ref<number | undefined>(undefined);
     const showCalendar = ref<boolean>(false);
     const showPortraits = ref<boolean>(false);
@@ -76,10 +86,15 @@
     onMounted(async () => {
         const res = await fetch("http://localhost:3000/api/days");
         dayData.value = await res.json();
-        showCalendar.value = true;
-        setTimeout(() => {
-            initProfiles(dayData.value);
-        }, 2200);
+    });
+
+    watch(
+        () => showCalendar.value,
+        (showCalendar) => {
+        if (showCalendar) {
+            stageChosenSound.stop();
+            stageSelectSound.play();
+        }
     });
 
     function reset() {
@@ -143,11 +158,20 @@
         }
     }
 
+    function startCalendar() {
+        showTitle.value = false;
+        showCalendar.value = true;
+        setTimeout(() => {
+            initProfiles(dayData.value);
+        }, 2200);
+    }
+
     function onPortraitHover(index: number) {
         if (!showPortraits.value) {
             return;
         }
         highlightKey.value = parseInt(`${index}`);  // Parsing the index to ensure it's a number
+        hoverSound.play();
     }
 
     function onPortraitClick(index: number) {
@@ -166,6 +190,8 @@
                 changeCompletionState(selectedProp.value, true, false)
             }
             showCalendar.value = false;
+            stageSelectSound.stop();
+            stageChosenSound.play();
         });
     }
 
@@ -190,6 +216,7 @@
 </script>
 
 <template>
+    <Title v-if="showTitle" @start="startCalendar"/>
     <Transition v-for="row in 5" :name="row % 2 === 0 ? 'even' : 'odd'" :key="row">
         <div class="container" v-if="showCalendar">
             <Portrait 
