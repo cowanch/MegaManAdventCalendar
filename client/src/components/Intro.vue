@@ -43,7 +43,7 @@
 
     const spriteOrigin = computed(() => {
         if (frameIndex !== undefined) {
-            const x = 450 + (frameIndex % 5) * 240;
+            const x = 471 + (frameIndex % 5) * 240;
             const y = (32 + Math.floor(frameIndex / 5) * 192);
             return { x, y };
         }

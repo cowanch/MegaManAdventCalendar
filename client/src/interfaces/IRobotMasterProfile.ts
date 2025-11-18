@@ -6,5 +6,6 @@ export interface IRobotMasterProfile {
     name: string;
     animation: number[];
     spriteWidth: number;
+    xOffset: number;
     password: EPasswordEntry[];
 };

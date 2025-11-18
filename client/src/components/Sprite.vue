@@ -59,7 +59,7 @@
                 backgroundPosition: backgroundPosition.value,
                 width: `${profile.spriteWidth}px`,
                 height: `${gameInfo.spriteHeight}px`,
-                left: `${leftPosition.value}px`,
+                left: `${leftPosition.value + profile.xOffset}px`,
                 top: `${topPosition.value}px`,
             }
         }
@@ -85,9 +85,9 @@
     }
 
     function onBeforeEnter(el: any) {
-        if (leftPosition && topPosition && originPosition) {
+        if (leftPosition && topPosition && originPosition && profile) {
             gsap.set(el, {
-                x: originPosition.x - leftPosition.value,
+                x: originPosition.x - leftPosition.value - (profile.spriteWidth / 2),
                 y: (originPosition.y - (spriteHeight.value - 96)) - topPosition.value,
             });
         }

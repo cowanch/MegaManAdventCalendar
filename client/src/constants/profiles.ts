@@ -16,6 +16,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Mega Man",
         animation: [],
         spriteWidth: 0,
+        xOffset: 0,
         password: [],
     },
     {
@@ -23,6 +24,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Cut Man",
         animation: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
         spriteWidth: 72,
+        xOffset: 0,
         password: [],
     },
     {
@@ -30,6 +32,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Guts Man",
         animation: [0, 1, 0, 1, 0, 1, 0, 1, 0],
         spriteWidth: 93,
+        xOffset: 0,
         password: [],
     },
     {
@@ -37,6 +40,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Ice Man",
         animation: [0, 1, 2],
         spriteWidth: 72,
+        xOffset: 0,
         password: [],
     },
     {
@@ -44,6 +48,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Bomb Man",
         animation: [0, 1, 1, 2, 3, 5, 7, 8, 6, 4, 2, 1],
         spriteWidth: 81,
+        xOffset: -4.5,
         password: [],
     },
     {
@@ -51,6 +56,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Fire Man",
         animation: [0, 1, 2, 3, 2, 3, 2, 3, 2],
         spriteWidth: 72,
+        xOffset: 0,
         password: [],
     },
     {
@@ -58,6 +64,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Elec Man",
         animation: [0, 1, 2],
         spriteWidth: 78,
+        xOffset: -3,
         password: [],
     },
     {
@@ -65,6 +72,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Metal Man",
         animation: [0, 1, 2],
         spriteWidth: 84,
+        xOffset: -6,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B2,
@@ -82,6 +90,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Air Man",
         animation: [0, 1, 2, 1, 2, 1, 2, 0, 1, 2, 1, 2, 1, 2, 0],
         spriteWidth: 111,
+        xOffset: 7.5,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B4,
@@ -99,6 +108,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Bubble Man",
         animation: [0, 1, 2],
         spriteWidth: 84,
+        xOffset: 0,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B2,
@@ -116,6 +126,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Quick Man",
         animation: [0, 1, 2, 3, 4, 5, 6, 7, 2],
         spriteWidth: 87,
+        xOffset: -7.5,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B2,
@@ -133,6 +144,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Crash Man",
         animation: [0, 1, 2],
         spriteWidth: 93,
+        xOffset: 0,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B1,
@@ -150,6 +162,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Flash Man",
         animation: [0, 1, 2, 3, 4, 5, 2],
         spriteWidth: 96,
+        xOffset: 3,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B2,
@@ -167,6 +180,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Heat Man",
         animation: [0, 1, 2, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 2],
         spriteWidth: 96,
+        xOffset: 0,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B2,
@@ -184,6 +198,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Wood Man",
         animation: [0, 1, 2, 1, 2, 1, 2, 0],
         spriteWidth: 96,
+        xOffset: 0,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.RED_B2,
@@ -201,6 +216,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Needle Man",
         animation: [0, 1, 0, 2, 3],
         spriteWidth: 126,
+        xOffset: -18,
         password: [
             EPasswordEntry.BLUE_A3,
             EPasswordEntry.RED_A6,
@@ -214,6 +230,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Magnet Man",
         animation: [0, 1, 2, 3],
         spriteWidth: 96,
+        xOffset: 4.5,
         password: [
             EPasswordEntry.BLUE_A3,
             EPasswordEntry.RED_A6,
@@ -227,6 +244,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Gemini Man",
         animation: [0, 1, 2, 3, 4, 2],
         spriteWidth: 102,
+        xOffset: 1.5,
         password: [
             EPasswordEntry.BLUE_A3,
             EPasswordEntry.RED_A6,
@@ -240,6 +258,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Hard Man",
         animation: [0, 1, 2, 2, 1, 2, 2, 0],
         spriteWidth: 132,
+        xOffset: 0,
         password: [
             EPasswordEntry.BLUE_A3,
             EPasswordEntry.RED_A6,
@@ -253,6 +272,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Top Man",
         animation: [0, 1, 2],
         spriteWidth: 93,
+        xOffset: -6,
         password: [
             EPasswordEntry.RED_A6,
             EPasswordEntry.BLUE_B5,
@@ -266,6 +286,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Snake Man",
         animation: [0, 1, 2],
         spriteWidth: 114,
+        xOffset: 6,
         password: [
             EPasswordEntry.RED_A3,
             EPasswordEntry.RED_A6,
@@ -279,6 +300,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Spark Man",
         animation: [0, 1, 2, 3, 4, 5, 4, 5, 1],
         spriteWidth: 132,
+        xOffset: 0,
         password: [
             EPasswordEntry.BLUE_A3,
             EPasswordEntry.RED_A6,
@@ -292,6 +314,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Shadow Man",
         animation: [0, 1, 2, 3],
         spriteWidth: 105,
+        xOffset: -3,
         password: [
             EPasswordEntry.BLUE_A3,
             EPasswordEntry.RED_A6,
@@ -305,6 +328,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Bright Man",
         animation: [0, 1, 2],
         spriteWidth: 93,
+        xOffset: 1.5,
         password: [
             EPasswordEntry.RED_A4,
             EPasswordEntry.RED_B1,
@@ -319,6 +343,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Toad Man",
         animation: [0, 1, 2],
         spriteWidth: 138,
+        xOffset: -1.5,
         password: [
             EPasswordEntry.RED_A4,
             EPasswordEntry.RED_B5,
@@ -333,6 +358,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Drill Man",
         animation: [0, 1, 2],
         spriteWidth: 129,
+        xOffset: -16.5,
         password: [
             EPasswordEntry.RED_A1,
             EPasswordEntry.RED_B4,
@@ -347,6 +373,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Pharaoh Man",
         animation: [0, 1, 2],
         spriteWidth: 120,
+        xOffset: -4.5,
         password: [
             EPasswordEntry.RED_A1,
             EPasswordEntry.RED_B5,
@@ -361,6 +388,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Ring Man",
         animation: [0, 1, 2, 3, 4, 5, 6],
         spriteWidth: 87,
+        xOffset: -4.5,
         password: [
             EPasswordEntry.RED_A1,
             EPasswordEntry.RED_A4,
@@ -375,6 +403,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Dust Man",
         animation: [0, 1, 2],
         spriteWidth: 102,
+        xOffset: 6,
         password: [
             EPasswordEntry.RED_A1,
             EPasswordEntry.RED_A4,
@@ -389,6 +418,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Dive Man",
         animation: [0, 1, 2],
         spriteWidth: 96,
+        xOffset: 0,
         password: [
             EPasswordEntry.RED_A1,
             EPasswordEntry.RED_A4,
@@ -403,6 +433,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Skull Man",
         animation: [0, 1, 2],
         spriteWidth: 84,
+        xOffset: -3,
         password: [
             EPasswordEntry.RED_A1,
             EPasswordEntry.RED_A4,
@@ -417,6 +448,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Gravity Man",
         animation: [0, 1, 2, 1, 2, 0, 1, 2, 1, 2, 3],
         spriteWidth: 96,
+        xOffset: 0,
         password: [
             EPasswordEntry.BLUE_B4,
             EPasswordEntry.RED_C1,
@@ -431,6 +463,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Wave Man",
         animation: [0, 1, 2, 2, 1, 3, 4, 5, 1],
         spriteWidth: 96,
+        xOffset: -1.5,
         password: [
             EPasswordEntry.RED_A6,
             EPasswordEntry.BLUE_B4,
@@ -445,6 +478,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Stone Man",
         animation: [0, 1, 2, 3],
         spriteWidth: 126,
+        xOffset: -15,
         password: [
             EPasswordEntry.RED_A5,
             EPasswordEntry.BLUE_B4,
@@ -459,6 +493,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Gyro Man",
         animation: [0, 1, 2, 3, 2, 1, 3, 2, 3, 2, 3, 2, 3, 2, 0],
         spriteWidth: 87,
+        xOffset: 1.5,
         password: [
             EPasswordEntry.RED_A3,
             EPasswordEntry.RED_C1,
@@ -473,6 +508,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Star Man",
         animation: [0, 1, 2, 3, 4, 5, 6, 7, 5, 3],
         spriteWidth: 96,
+        xOffset: 1.5,
         password: [
             EPasswordEntry.RED_C1,
             EPasswordEntry.BLUE_D4,
@@ -487,6 +523,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Charge Man",
         animation: [0, 1, 2, 3, 2, 1, 2, 0, 4, 5, 6, 7, 8, 9, 10, 4],
         spriteWidth: 87,
+        xOffset: 3,
         password: [
             EPasswordEntry.RED_C1,
             EPasswordEntry.BLUE_D4,
@@ -501,6 +538,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Napalm Man",
         animation: [0, 1, 2, 3, 4, 3, 4, 3],
         spriteWidth: 117,
+        xOffset: -9,
         password: [
             EPasswordEntry.BLUE_B4,
             EPasswordEntry.BLUE_C1,
@@ -515,6 +553,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Crystal Man",
         animation: [0, 1, 2, 3, 4, 3, 4, 3],
         spriteWidth: 96,
+        xOffset: 3,
         password: [
             EPasswordEntry.BLUE_B4,
             EPasswordEntry.BLUE_C1,
@@ -529,6 +568,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Blizzard Man",
         animation: [0, 1, 2, 1, 3, 4, 5, 4, 3, 1, 2, 1, 3, 4, 6],
         spriteWidth: 147,
+        xOffset: 4.5,
         password: [
             EPasswordEntry.RED_B1,
             EPasswordEntry.RED_B6,
@@ -542,6 +582,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Centaur Man",
         animation: [0, 1, 0, 2, 0, 1, 3],
         spriteWidth: 120,
+        xOffset: 6,
         password: [
             EPasswordEntry.RED_B2,
             EPasswordEntry.RED_B6,
@@ -555,6 +596,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Flame Man",
         animation: [0, 1, 2, 1, 3],
         spriteWidth: 96,
+        xOffset: 4.5,
         password: [
             EPasswordEntry.RED_B2,
             EPasswordEntry.RED_B6,
@@ -568,6 +610,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Knight Man",
         animation: [0, 1, 2, 3, 4, 3],
         spriteWidth: 162,
+        xOffset: 6,
         password: [
             EPasswordEntry.RED_A6,
             EPasswordEntry.RED_B2,
@@ -581,6 +624,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Plant Man",
         animation: [0, 1, 2, 1, 3],
         spriteWidth: 108,
+        xOffset: -6,
         password: [
             EPasswordEntry.RED_B2,
             EPasswordEntry.RED_B5,
@@ -594,6 +638,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Tomahawk Man",
         animation: [0, 1, 2, 3, 4],
         spriteWidth: 153,
+        xOffset: -10.5,
         password: [
             EPasswordEntry.RED_A2,
             EPasswordEntry.RED_B6,
@@ -607,6 +652,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Wind Man",
         animation: [0, 1, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 1, 4],
         spriteWidth: 147,
+        xOffset: -1.5,
         password: [
             EPasswordEntry.RED_B2,
             EPasswordEntry.RED_B6,
@@ -620,6 +666,7 @@ const profiles: IRobotMasterProfile[] = [
         name: "Yamato Man",
         animation: [0, 1, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 1],
         spriteWidth: 144,
+        xOffset: -18,
         password: [
             EPasswordEntry.RED_B2,
             EPasswordEntry.RED_B6,
