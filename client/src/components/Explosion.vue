@@ -27,7 +27,7 @@
         const bgImg = getImage("Explosion");
         if (bgImg) {
             return {
-                backgroundImage: `url(${bgImg.url})`,
+                backgroundImage: `url(${bgImg})`,
                 backgroundPosition: backgroundPosition.value,
                 width: `${SPIRTE_SIZE}px`,
                 height: `${SPIRTE_SIZE}px`,

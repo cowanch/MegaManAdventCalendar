@@ -57,7 +57,7 @@
     const gameTitleStyle = computed(() => {
         if (gameTitle.value) {
             return {
-                backgroundImage: `url(${gameTitle.value.url})`,
+                backgroundImage: `url(${gameTitle.value})`,
             }
         }
     });

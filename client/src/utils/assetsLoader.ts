@@ -1,65 +1,58 @@
-const passwordScreens: { [game: number]: { url: string, img: HTMLImageElement } } = {};
-const sprites: { [game: number]: { url: string, img: HTMLImageElement } } = {};
-const titles: { [game: number]: { url: string, img: HTMLImageElement } } = {};
-const images: { [name: string]: { url: string, img: HTMLImageElement } } = {};
+const passwordScreens: { [game: number]: string } = {};
+const sprites: { [game: number]: string } = {};
+const titles: { [game: number]: string } = {};
+const images: { [name: string]: string } = {};
 
-const pathes = [
-    "img/password/MM2_Password.png",
-    "img/password/MM3_Password.png",
-    "img/password/MM4_Password.png",
-    "img/password/MM5_Password.png",
-    "img/password/MM6_Password.png",
-    "img/sprite/MM1_Sprites.png",
-    "img/sprite/MM2_Sprites.png",
-    "img/sprite/MM3_Sprites.png",
-    "img/sprite/MM4_Sprites.png",
-    "img/sprite/MM5_Sprites.png",
-    "img/sprite/MM6_Sprites.png",
-    "img/title/MM1_Title.png",
-    "img/title/MM2_Title.png",
-    "img/title/MM3_Title.png",
-    "img/title/MM4_Title.png",
-    "img/title/MM5_Title.png",
-    "img/title/MM6_Title.png",
-    "img/Explosion.png",
-];
+const pwModules = import.meta.glob("../assets/img/password/*.png", { eager: true, import: "default" });
+const spriteModules = import.meta.glob("../assets/img/sprite/*.png", { eager: true, import: "default" });
+const titleModules = import.meta.glob("../assets/img/title/*.png", { eager: true, import: "default" });
+const imageModules = import.meta.glob("../assets/img/Explosion.png", { eager: true, import: "default" });
 
-function loadImage(src: string): Promise<HTMLImageElement> {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = src;
-    });
+for (const path in pwModules) {
+    const match = path.match(/\d+/);
+    if (match) {
+        const gameNumber = parseInt(match[0], 10);
+        passwordScreens[gameNumber] = pwModules[path] as string;
+    }
+}
+
+for (const path in spriteModules) {
+    const match = path.match(/\d+/);
+    if (match) {
+        const gameNumber = parseInt(match[0], 10);
+        sprites[gameNumber] = spriteModules[path] as string;
+    }
+}
+
+for (const path in titleModules) {
+    const match = path.match(/\d+/);
+    if (match) {
+        const gameNumber = parseInt(match[0], 10);
+        titles[gameNumber] = titleModules[path] as string;
+    }
+}
+
+for (const path in imageModules) {
+    const pathParts = path.split("/");
+    if (pathParts.length) {
+        const name = pathParts[pathParts.length - 1]?.replace(".png", "");
+        if (name) {
+            images[name] = imageModules[path] as string;
+        }
+    }
 }
 
 export async function preloadAssets() {
-    await Promise.all(
-        pathes.map(async (path) => {
-            const assetsPath = `../assets/${path}`;
-            const url = new URL(assetsPath, import.meta.url).href;
-            const img: HTMLImageElement = await loadImage(url);
-            const match = path.match(/\d+/);
-            if (match) {
-                const gameNumber = parseInt(match[0], 10);
-                if (path.includes("password")) {
-                    passwordScreens[gameNumber] = { url, img };
-                } else if (path.includes("sprite")) {
-                    sprites[gameNumber] = { url, img };
-                } else if (path.includes("title")) {
-                    titles[gameNumber] = { url, img };
-                }
-            } else {
-                const pathParts = path.split("/");
-                if (pathParts.length) {
-                    const name = pathParts[pathParts.length - 1]?.replace(".png", "");
-                    if (name) {
-                        images[name] = { url, img };
-                    }
-                }
-            }
-        })
-    );
+    const assets = [
+        ...Object.values(passwordScreens),
+        ...Object.values(titles),
+        ...Object.values(sprites),
+        ...Object.values(images),
+    ];
+    assets.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
 }
 
 export function getPasswordScreen(game: number) {

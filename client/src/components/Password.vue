@@ -21,7 +21,7 @@
     const passwordStyle = computed(() => {
         if (passwordScreen.value) {
             return {
-                backgroundImage: `url(${passwordScreen.value.url})`,
+                backgroundImage: `url(${passwordScreen.value})`,
             };
         }
         return undefined;

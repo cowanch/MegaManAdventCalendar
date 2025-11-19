@@ -55,7 +55,7 @@
     const spriteStyle = computed(() => {
         if (profile && gameInfo && spriteSheet.value) {
             return {
-                backgroundImage: `url(${spriteSheet.value.url})`,
+                backgroundImage: `url(${spriteSheet.value})`,
                 backgroundPosition: backgroundPosition.value,
                 width: `${profile.spriteWidth}px`,
                 height: `${gameInfo.spriteHeight}px`,
