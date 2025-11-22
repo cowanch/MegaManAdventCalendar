@@ -84,7 +84,7 @@
     }));
     
     onMounted(async () => {
-        const res = await fetch("http://localhost:3000/api/days");
+        const res = await fetch("/api/days");
         dayData.value = await res.json();
     });
 

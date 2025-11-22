@@ -1,0 +1,12 @@
+{
+  "name": "mega-man-advent-calendar",
+  "scripts": {
+    "heroku-postbuild": "npm run build-client && npm run build-server",
+    "build-client": "cd client && npm install && npm run build",
+    "build-server": "cd server && npm install && npm run build",
+    "start": "node server/dist/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
