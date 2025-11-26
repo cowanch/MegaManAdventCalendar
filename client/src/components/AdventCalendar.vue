@@ -1,20 +1,20 @@
 <script setup lang="ts">
     import { computed, onMounted, ref, watch, type Ref } from "vue";
-    import Portrait from "./components/Portrait.vue";
-    import { GetRobotMasterProfiles } from "./constants/profiles";
-    import { ERobotMasterId } from "./enums/ERobotMasterId";
-    import { ELookState } from "./enums/ELookState";
-    import type { IRobotMasterProfile } from "./interfaces/IRobotMasterProfile";
-    import type { IPortraitProps } from "./interfaces/IPortraitProps";
-    import Intro from "./components/Intro.vue"
-    import { COMPLETION_STATE_LS_KEY, type ICompletionState } from "./interfaces/ICompletionState";
-    import type { IGameInfo } from "./interfaces/IGameInfo";
-    import { getGameInfo } from "./utils/gameInfo";
     import { useSound } from "@vueuse/sound";
-    import hoverWav from "./assets/sound/Hover.wav";
-    import stageSelectMp3 from "./assets/sound/StageSelect.mp3";
-    import stageChosenMp3 from "./assets/sound/StageChosen.mp3";
-    import Title from "./components/Title.vue"
+    import Intro from "./Intro.vue"
+    import Portrait from "./Portrait.vue";
+    import Title from "./Title.vue"
+    import hoverWav from "@/assets/sound/Hover.wav";
+    import stageSelectMp3 from "@/assets/sound/StageSelect.mp3";
+    import stageChosenMp3 from "@/assets/sound/StageChosen.mp3";
+    import { GetRobotMasterProfiles } from "@/constants/profiles";
+    import { ELookState } from "@/enums/ELookState";
+    import { ERobotMasterId } from "@/enums/ERobotMasterId";
+    import { COMPLETION_STATE_LS_KEY, type ICompletionState } from "@/interfaces/ICompletionState";
+    import type { IGameInfo } from "@/interfaces/IGameInfo";
+    import type { IPortraitProps } from "@/interfaces/IPortraitProps";
+    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
+    import { getGameInfo } from "@/utils/gameInfo";
 
     const RobotMasterProfiles: Record<ERobotMasterId, IRobotMasterProfile> = GetRobotMasterProfiles();
     const DLN001_INDEX = 12;

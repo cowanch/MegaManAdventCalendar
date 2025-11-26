@@ -1,8 +1,8 @@
 <script setup lang="ts">
+    import { computed } from 'vue';
     import type { EPasswordEntry } from '@/enums/EPasswordEntry';
     import { getPasswordScreen } from '@/utils/assetsLoader';
     import { getPipMargins } from '@/utils/passwordPositioning';
-    import { computed } from 'vue';
 
     interface IProps {
         game?: number;

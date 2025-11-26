@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import App from "./AdventCalendar.vue";
+import App from "./App.vue";
 import "./assets/styles/global.css";
 import { preloadAssets } from "./utils/assetsLoader";
 

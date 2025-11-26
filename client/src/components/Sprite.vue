@@ -1,8 +1,8 @@
 <script setup lang="ts">
-    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
     import { computed, ref, watch } from "vue";
     import gsap from "gsap";
     import type { IGameInfo } from "@/interfaces/IGameInfo";
+    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
     import { getSprite } from "@/utils/assetsLoader";
 
     const emit = defineEmits(["anim-finished"]);

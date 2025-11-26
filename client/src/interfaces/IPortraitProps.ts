@@ -1,5 +1,5 @@
-import type { ELookState } from "@/enums/ELookState";
 import type { IRobotMasterProfile } from "./IRobotMasterProfile";
+import type { ELookState } from "@/enums/ELookState";
 
 export interface IPortraitProps {
     dayNumber?: number;

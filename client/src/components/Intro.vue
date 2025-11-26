@@ -1,16 +1,16 @@
 <script setup lang="ts">
-    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
+    import { computed, ref, watch } from "vue";
+    import { useSound } from "@vueuse/sound";
+    import Explosion from "./Explosion.vue";
+    import Password from "./Password.vue";
     import Sprite from "./Sprite.vue";
     import TextDisplay from "./TextDisplay.vue";
-    import { computed, ref, watch } from "vue";
-    import Explosion from "./Explosion.vue";
-    import type { IGameInfo } from "@/interfaces/IGameInfo";
-    import { getTitle } from "@/utils/assetsLoader";
-    import Password from "./Password.vue";
     import TextOptions from "./TextOptions.vue";
-    import { useSound } from "@vueuse/sound";
-    import explodeWav from "../assets/sound/Explode.wav";
-    import menuOpenWav from "../assets/sound/MenuOpen.wav";
+    import explodeWav from "@/assets/sound/Explode.wav";
+    import menuOpenWav from "@/assets/sound/MenuOpen.wav";
+    import type { IGameInfo } from "@/interfaces/IGameInfo";
+    import type { IRobotMasterProfile } from "@/interfaces/IRobotMasterProfile";
+    import { getTitle } from "@/utils/assetsLoader";
 
     const emit = defineEmits(["complete", "back"]);
     

@@ -1,8 +1,8 @@
 <script setup lang="ts">
     import { computed, ref, watch, type StyleValue } from "vue";
     import TextDisplay from "./TextDisplay.vue";
-    import { ERobotMasterId } from "@/enums/ERobotMasterId";
     import { ELookState } from "@/enums/ELookState";
+    import { ERobotMasterId } from "@/enums/ERobotMasterId";
     import type { IPortraitProps } from "@/interfaces/IPortraitProps";
 
     const {
