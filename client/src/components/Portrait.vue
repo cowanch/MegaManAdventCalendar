@@ -117,6 +117,7 @@
     }
     .stack {
         display: grid;
+        cursor: pointer;
     }
     .stack div {
         grid-area: 1 / 1;

@@ -176,10 +176,20 @@
     }
 
     function onPortraitClick(index: number) {
-        if (index == DLN001_INDEX 
-            || index === selectedIndex.value 
+        if (index === selectedIndex.value 
             || portraitProps[index]?.value.defeated
             || !portraitProps[index]?.value.profile) {
+            return;
+        }
+        if (index == DLN001_INDEX) {
+            if (checkAllCompleted()) {
+                allCompleted.value = true;
+                showPortraits.value = false;
+                highlightKey.value = -1;
+                requestAnimationFrame(() => {
+                    showCalendar.value = false;
+                });
+            }
             return;
         }
         selectedIndex.value = index;
