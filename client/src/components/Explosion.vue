@@ -1,11 +1,11 @@
 <script setup lang="ts">
     import { computed, onMounted, ref, useTemplateRef } from 'vue';
     import gsap from "gsap";
-    import { getImage } from '@/utils/assetsLoader';
+    import { getParticle } from '@/utils/assetsLoader';
 
     const ANIM_LENGTH = 5;
-    const SPIRTE_SIZE = 72;
-    const EXPLODE_DISTANCE = window.screen.availWidth / 2 + SPIRTE_SIZE;
+    const SPRITE_SIZE = 72;
+    const EXPLODE_DISTANCE = window.screen.availWidth / 2 + SPRITE_SIZE;
 
     const emit = defineEmits(["explode-finished"]);
 
@@ -14,23 +14,23 @@
     const parts2Refs = useTemplateRef("parts2");
 
     const backgroundPosition = computed(() => {
-        const x = (animFrame.value % ANIM_LENGTH) * SPIRTE_SIZE;
+        const x = (animFrame.value % ANIM_LENGTH) * SPRITE_SIZE;
         return `-${x}px 0px`;
     });
 
     const leftPosition = computed(() => {
         const screenWidth = window.screen.availWidth;
-        return (screenWidth - SPIRTE_SIZE) / 2;
+        return (screenWidth - SPRITE_SIZE) / 2;
     });
 
     const explosionStyle = computed(() => {
-        const bgImg = getImage("Explosion");
+        const bgImg = getParticle("Explosion");
         if (bgImg) {
             return {
                 backgroundImage: `url(${bgImg})`,
                 backgroundPosition: backgroundPosition.value,
-                width: `${SPIRTE_SIZE}px`,
-                height: `${SPIRTE_SIZE}px`,
+                width: `${SPRITE_SIZE}px`,
+                height: `${SPRITE_SIZE}px`,
                 left: `${leftPosition.value}px`,
             };
         }

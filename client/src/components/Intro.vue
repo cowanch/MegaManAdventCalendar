@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { computed, ref, watch } from "vue";
     import { useSound } from "@vueuse/sound";
+    import Ending from "./Ending.vue";
     import Explosion from "./Explosion.vue";
     import Password from "./Password.vue";
     import Sprite from "./Sprite.vue";
@@ -24,21 +25,23 @@
         profile?: IRobotMasterProfile;
         gameInfo?: IGameInfo;
         frameIndex?: number,
+        showEnding?: boolean;
     }
 
     const {
         profile = undefined,
         gameInfo = undefined,
         frameIndex = undefined,
+        showEnding = false,
     } = defineProps<IProps>();
 
     const explodeSound = useSound(explodeWav);
     const menuOpenSound = useSound(menuOpenWav);
 
-    const name = ref<string>("");
     const animDone = ref<boolean>(false);
     const hoverId = ref<EOption>(EOption.BACK);
     const isExploding = ref<boolean>(false);
+    const showName = ref<boolean>(false);
     const showPassword = ref<boolean>(false);
 
     const spriteOrigin = computed(() => {
@@ -66,31 +69,18 @@
         return Object.values(EOption).filter((opt) => opt !== EOption.PASSWORD || ( gameInfo && gameInfo.game > 1));
     });
 
+    const showEnterStage = computed(() => {
+        return (profile !== undefined && gameInfo !== undefined) || showEnding;
+    });
+
     watch(
         () => profile,
         (profile) => {
-        if (profile !== undefined) {
-            
+        if (profile === undefined) {
+            isExploding.value = false;
+            hoverId.value = EOption.BACK;
         }
     });
-
-    function startAnimation() {
-        if (profile) {
-            let nameStr = "";
-            let nameIdx = 0;
-            const animInterval = setInterval(() => {
-                nameStr += profile.name[nameIdx];
-                name.value = nameStr.padEnd(profile.name.length, " ");
-                nameIdx++;
-                if (profile.name.length <= nameIdx) {
-                    clearInterval(animInterval);
-                    setTimeout(() => {
-                        animDone.value = true;
-                    }, 1000);
-                }
-            }, 100);
-        }
-    }
 
     function onOptionHover(id: EOption) {
         hoverId.value = id;
@@ -99,17 +89,17 @@
     function onOptionClick(id: EOption) {
         switch(id) {
             case EOption.BACK:
-                name.value = "";
                 animDone.value = false;
                 showPassword.value = false;
+                showName.value = false;
                 requestAnimationFrame(() => {
                     emit("back");
                 });
                 break;
             case EOption.COMPLETED:
-                name.value = "";
                 animDone.value = false;
                 showPassword.value = false;
+                showName.value = false;
                 isExploding.value = true;
                 explodeSound.play();
                 break;
@@ -123,8 +113,6 @@
     }
 
     function onExplodeFinished() {
-        isExploding.value = false;
-        hoverId.value = EOption.BACK;
         emit("complete");
     }
 </script>
@@ -134,14 +122,14 @@
         <Password v-show="showPassword" :game="gameInfo?.game" :password="profile?.password"/>
     </Transition>
     <Transition name="enter-stage">
-        <div class="enter-stage" v-if="profile && gameInfo">
+        <div class="enter-stage" v-if="showEnterStage">
             <div class="game-title" >
                 <Transition name="side">
                     <div class="game-title__img" :style="gameTitleStyle" v-if="animDone" />
                 </Transition>
             </div>
             <div class="intro-text">
-                <TextDisplay :text="name" single-line />
+                <TextDisplay v-if="showName && profile" :text="profile.name" single-line type-in @done-typing="animDone = true" />
             </div>
             <Transition name="side">
                 <TextOptions 
@@ -159,9 +147,10 @@
         :profile="profile"
         :game-info="gameInfo"
         :origin-position="spriteOrigin"
-        @anim-finished="startAnimation"
+        @anim-finished="showName = true"
     />
     <Explosion v-else @explode-finished="onExplodeFinished" />
+    <Ending v-if="showEnding"/>
 </template>
 
 <style scoped>

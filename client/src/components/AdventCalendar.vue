@@ -76,6 +76,7 @@
     const showCalendar = ref<boolean>(false);
     const showPortraits = ref<boolean>(false);
     const selectedIndex = ref<number | undefined>(undefined);
+    const allCompleted = ref<boolean>(false);
 
     // Create an array of 25 profiles for demonstration purposes
     const portraitProps: Ref<IPortraitProps>[] = Array.from({ length: 25 }, () => ref<IPortraitProps>({
@@ -195,6 +196,10 @@
         });
     }
 
+    function checkAllCompleted(): boolean {
+        return Object.values(portraitProps).every(prop => prop.value.defeated || prop.value.profile?.id === ERobotMasterId.DLN001);
+    }
+
     function onIntroBack() {
         selectedIndex.value = undefined;
         showCalendar.value = true;
@@ -207,11 +212,12 @@
         if (selectedProp.value) {
             changeCompletionState(selectedProp.value, true, true);
         }
-        selectedIndex.value = undefined;
-        showCalendar.value = true;
-        setTimeout(() => {
-            reset();
-        }, 2200);
+        if (checkAllCompleted() === false) {
+            onIntroBack();
+        } else {
+            selectedIndex.value = undefined;
+            allCompleted.value = true;
+        }
     }
 </script>
 
@@ -235,6 +241,7 @@
         :profile="selectedProfile"
         :game-info="selectedGameInfo"
         :frame-index="parseInt(`${selectedIndex}`)"
+        :show-ending="allCompleted"
         @back="onIntroBack"
         @complete="onIntroComplete"
     />
