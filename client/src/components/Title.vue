@@ -2,6 +2,7 @@
     import { ref } from 'vue';
     import TextDisplay from './TextDisplay.vue';
     import TextOptions from './TextOptions.vue';
+    import BuyMeACoffee from './BuyMeACoffee.vue';
 
     const emit = defineEmits(["start"]);
 
@@ -39,6 +40,7 @@
             />
             <div class="helmet" />
         </div>
+        <BuyMeACoffee />
     </div>
 </template>
 
@@ -66,6 +68,7 @@
     .options-container {
         display: flex;
         margin-top: 100px;
+        margin-bottom: 125px;
         justify-content: space-evenly;
         width: 100vh;
     }
