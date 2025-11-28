@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
     import gsap from "gsap";
+    import { useSound } from "@vueuse/sound";
+    import shootWav from "@/assets/sound/Shoot.wav";
 
     const emit = defineEmits(["click", "hover", "done-typing"]);
 
@@ -23,6 +25,8 @@
         typeIn = false,
         slideIn = false,
     } = defineProps<Props>();
+
+    const shootSound = useSound(shootWav);
 
     const partialText = ref<string>("");
     const typeIdx = ref<number>(-1);
@@ -72,6 +76,11 @@
             if (index < 0) return;
             const charRef = word1Refs.value?.[index];
             if (slideIn && charRef) {
+                if (text.charAt(index) !== " ") {
+                    setTimeout(() => {
+                        shootSound.play();
+                    }, 200);
+                }
                 gsap.from(charRef, {
                     x: 600 - (index * 27),
                     duration: 0.2,

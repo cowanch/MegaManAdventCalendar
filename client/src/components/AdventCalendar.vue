@@ -188,6 +188,7 @@
                 highlightKey.value = -1;
                 requestAnimationFrame(() => {
                     showCalendar.value = false;
+                    stageSelectSound.stop();
                 });
             }
             return;

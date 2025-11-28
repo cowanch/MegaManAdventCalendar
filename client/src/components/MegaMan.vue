@@ -1,7 +1,9 @@
 <script setup lang="ts">
     import { computed, Transition, ref, onMounted, watch } from "vue";
+    import { useSound } from "@vueuse/sound";
     import gsap from "gsap";
     import { getMMSprite } from "@/utils/assetsLoader";
+    import teleportWav from "@/assets/sound/Teleport.wav";
 
     const emit = defineEmits(["enter-finished"]);
 
@@ -16,6 +18,8 @@
     const {
         isShooting = false,
     } = defineProps<Props>();
+
+    const teleportSound = useSound(teleportWav);
 
     const spriteAnimFrame = ref<number>(0);
     const visible = ref<boolean>(false);
@@ -40,8 +44,6 @@
                 backgroundPosition: backgroundPosition.value,
                 width: `${SPRITE_WIDTH}px`,
                 height: `${SPRITE_HEIGHT}px`,
-                // left: `${leftPosition.value + profile.xOffset}px`,
-                // top: `${topPosition.value}px`,
             }
         }
     });
@@ -101,6 +103,7 @@
                 emit("enter-finished");
             }
         }, 50);
+        teleportSound.play();
     }
 
     function animateBackwards() {
@@ -113,6 +116,7 @@
                 });
             }
         }, 50);
+        teleportSound.play();
     }
 </script>
 
