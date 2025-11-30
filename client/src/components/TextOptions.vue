@@ -29,6 +29,7 @@
             :key="option"
             :text="option"
             hoverable
+            single-line
             :isHovered="hovered === option"
             @hover="onOptionHover(option)"
             @click="onOptionClick(option)"
@@ -37,5 +38,11 @@
 </template>
 
 <style scoped>
-
+    .options {
+        display: grid;
+        grid-template-rows: repeat(3, min-content);
+        row-gap: 16px;
+        justify-self: center;
+        margin-top: 5%;
+    }
 </style>

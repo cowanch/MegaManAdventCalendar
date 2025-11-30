@@ -182,13 +182,6 @@
         margin-bottom: 9%;
         align-self: end;
     }
-    .options {
-        display: grid;
-        grid-template-rows: repeat(3, min-content);
-        row-gap: 16px;
-        justify-self: center;
-        margin-top: 5%;
-    }
 
     .password-enter-from,
     .password-leave-to {

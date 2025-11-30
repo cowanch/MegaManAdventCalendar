@@ -3,14 +3,17 @@
     import TextDisplay from './TextDisplay.vue';
     import TextOptions from './TextOptions.vue';
     import BuyMeACoffee from './BuyMeACoffee.vue';
+    import HowToPlay from './HowToPlay.vue';
 
     const emit = defineEmits(["start"]);
 
     enum ETitleOption {
         START = "Start",
+        HOW_TO_PLAY = "How to Play",
     }
 
     const hoverId = ref<ETitleOption>(ETitleOption.START);
+    const showInstructions = ref<boolean>(false);
 
     function onOptionHover(id: ETitleOption) {
         hoverId.value = id;
@@ -21,6 +24,9 @@
             case ETitleOption.START:
                 emit("start");
                 break;
+            case ETitleOption.HOW_TO_PLAY:
+                showInstructions.value = true;
+                break;
             default:
                 break;
         }
@@ -28,29 +34,42 @@
 </script>
 
 <template>
-    <div class="title-container">
-        <div class="title-logo"/>
-        <TextDisplay text="Advent Calendar" single-line class="title-text"/>
-        <div class="options-container">
-            <TextOptions
-                :options="Object.values(ETitleOption)"
-                :hovered="hoverId"
-                @hover="onOptionHover"
-                @click="onOptionClick"
-            />
-            <div class="helmet" />
+    <div class="black-bg">
+        <div v-if="!showInstructions" class="title-container">
+            <div class="title-logo"/>
+            <TextDisplay text="Advent Calendar" single-line class="title-text"/>
+            <div class="options-container">
+                <TextOptions
+                    :options="Object.values(ETitleOption)"
+                    :hovered="hoverId"
+                    @hover="onOptionHover"
+                    @click="onOptionClick"
+                />
+                <div class="helmet" />
+            </div>
+            <BuyMeACoffee />
         </div>
-        <BuyMeACoffee />
+        <div v-else>
+            <HowToPlay />
+            <TextOptions
+                class="back-option"
+                :options="['Back']"
+                hovered="Back"
+                @click="showInstructions = false"
+            />
+        </div>
     </div>
 </template>
 
 <style scoped>
-    .title-container {
+    .black-bg {
+        background-color: black;
         width: 100%;
         height: 100vh;
-        background-color: black;
         margin-top: -8px;
         margin-bottom: -8px;
+    }
+    .title-container {
         text-align: center;
         align-items: center;
         display: flex;
@@ -76,5 +95,9 @@
         background-image: url("../assets/img/Helmet.png");
         width: 201px;
         height: 159px;
+    }
+    .back-option {
+        margin-top: 20px;
+        justify-content: center;
     }
 </style>
