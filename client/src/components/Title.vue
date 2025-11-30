@@ -35,7 +35,7 @@
 
 <template>
     <div class="black-bg">
-        <div v-if="!showInstructions" class="title-container">
+        <div class="title-container">
             <div class="title-logo"/>
             <TextDisplay text="Advent Calendar" single-line class="title-text"/>
             <div class="options-container">
@@ -49,15 +49,7 @@
             </div>
             <BuyMeACoffee />
         </div>
-        <div v-else>
-            <HowToPlay />
-            <TextOptions
-                class="back-option"
-                :options="['Back']"
-                hovered="Back"
-                @click="showInstructions = false"
-            />
-        </div>
+        <HowToPlay v-if="showInstructions" @back="showInstructions = false" />
     </div>
 </template>
 
@@ -95,9 +87,5 @@
         background-image: url("../assets/img/Helmet.png");
         width: 201px;
         height: 159px;
-    }
-    .back-option {
-        margin-top: 20px;
-        justify-content: center;
     }
 </style>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { computed, onMounted, ref, watch, type Ref } from "vue";
     import { useSound } from "@vueuse/sound";
+    import HelpButton from "./HelpButton.vue";
+    import HowToPlay from "./HowToPlay.vue";
     import Intro from "./Intro.vue"
     import Portrait from "./Portrait.vue";
     import Title from "./Title.vue"
@@ -77,6 +79,7 @@
     const showPortraits = ref<boolean>(false);
     const selectedIndex = ref<number | undefined>(undefined);
     const allCompleted = ref<boolean>(false);
+    const showInstructions = ref<boolean>(false);
 
     // Create an array of 25 profiles for demonstration purposes
     const portraitProps: Ref<IPortraitProps>[] = Array.from({ length: 25 }, () => ref<IPortraitProps>({
@@ -234,6 +237,8 @@
 
 <template>
     <Title v-if="showTitle" @start="startCalendar"/>
+    <HelpButton v-if="!showTitle" @click="showInstructions = true" />
+    <HowToPlay v-if="showInstructions" @back="showInstructions = false" />
     <Transition v-for="row in 5" :name="row % 2 === 0 ? 'even' : 'odd'" :key="row">
         <div class="container" v-if="showCalendar">
             <Portrait 
