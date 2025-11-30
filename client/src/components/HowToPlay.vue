@@ -1,6 +1,6 @@
 <template>
     <div class="how-to-text">
-        <h3>Take on Dr. Wily’s menacing machines each day leading up to Christmas!</h3>
+        <h3>Take on Dr. Wily’s menacing machines in the days leading up to Christmas!</h3>
         <p>Every day, a new classic Robot Master is revealed on the calendar—and your mission is to defeat them in their original game.</p>
 
         <p>To participate, you’ll need access to <i>Mega Man</i> games 1–6. If you don’t already own them, the most convenient option is the <a href="https://store.steampowered.com/app/363440/Mega_Man_Legacy_Collection/" target="_blank">Mega Man Legacy Collection</a>, which includes all six titles.</p>
