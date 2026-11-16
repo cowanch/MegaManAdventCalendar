@@ -15,7 +15,8 @@ body {
     inset: 0; /* fills the whole viewport */
     background-color: #0070ec;
     background-image: url('../img/TitleBackground.png');
-    background-size: round(calc(var(--tile-width) * var(--sx)), 1px) round(calc(var(--tile-height) * var(--sy)), 1px);
+    background-size: round(calc(var(--tile-width) * var(--sx)), 1px)
+        round(calc(var(--tile-height) * var(--sy)), 1px);
 
     &:has(.black-bg) {
         background-color: black;
@@ -30,4 +31,7 @@ body {
     left: 50%;
     transform-origin: center center;
     transform: translate(-50%, -50%) scaleX(var(--sx)) scaleY(var(--sy));
+}
+.entity {
+    scale: calc(var(--sy) / var(--sx)) calc(var(--sy) / var(--sy));
 }

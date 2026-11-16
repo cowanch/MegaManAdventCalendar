@@ -123,12 +123,12 @@
     </Transition>
     <Transition name="enter-stage">
         <div class="enter-stage" v-if="showEnterStage">
-            <div class="game-title" >
+            <div class="entity game-title" >
                 <Transition name="side">
                     <div class="game-title__img" :style="gameTitleStyle" v-if="animDone" />
                 </Transition>
             </div>
-            <div class="intro-text">
+            <div class="entity intro-text">
                 <TextDisplay v-if="showName && profile" :text="profile.name" single-line type-in @done-typing="animDone = true" />
             </div>
             <Transition name="side">

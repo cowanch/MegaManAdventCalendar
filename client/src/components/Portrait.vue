@@ -45,7 +45,7 @@
         if (!profile) {
             return {};
         }
-        let style: StyleValue = {};
+        const style: StyleValue = {};
         
         let index: number;
         if (profile.id === ERobotMasterId.DLN001) {
@@ -95,7 +95,7 @@
 </script>
 
 <template>
-    <div class="portrait-container">
+    <div class="portrait-container entity">
         <div class="stack" @mouseenter="$emit('hover')" @click="$emit('click')">
             <div class="frame" />
             <div v-if="isHovered" class="highlight" :style="highlightStyle" />

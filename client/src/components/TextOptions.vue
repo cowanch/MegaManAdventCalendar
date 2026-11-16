@@ -23,7 +23,7 @@
 </script>
 
 <template>
-    <div class="options">
+    <div class="entity options">
         <TextDisplay
             v-for="option in options"
             :key="option"

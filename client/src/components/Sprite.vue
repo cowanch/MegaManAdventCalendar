@@ -85,7 +85,7 @@
     }
 
     function onBeforeEnter(el: any) {
-        if (leftPosition && topPosition && originPosition && profile) {
+        if (leftPosition.value && topPosition && originPosition && profile) {
             gsap.set(el, {
                 x: originPosition.x - leftPosition.value - (profile.spriteWidth / 2),
                 y: (originPosition.y - (spriteHeight.value - 96)) - topPosition.value,
@@ -112,7 +112,7 @@
 
 <template>
     <Transition @before-enter="onBeforeEnter"  @enter="onEnter" @after-enter="onAfterEnter">
-        <div class="sprite" v-if="spriteStyle" :style="spriteStyle" />
+        <div class="entity sprite" v-if="spriteStyle" :style="spriteStyle" />
     </Transition>
 </template>
 
