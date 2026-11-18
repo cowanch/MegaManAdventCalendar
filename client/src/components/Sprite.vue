@@ -42,10 +42,14 @@
         return "";
     });
 
+    const xScale = computed(() => {
+        return document.body.clientWidth / 1920;
+    });
+
     const leftPosition = computed(() => {
         const screenWidth = document.body.clientWidth;
         const spriteWidth = profile?.spriteWidth ?? 0;
-        return (screenWidth - spriteWidth) / 2;
+        return ((screenWidth / xScale.value) - spriteWidth) / 2;
     });
 
     const topPosition = computed(() => {
@@ -85,7 +89,7 @@
     }
 
     function onBeforeEnter(el: any) {
-        if (leftPosition.value && topPosition && originPosition && profile) {
+        if (leftPosition.value && topPosition.value && originPosition && profile) {
             gsap.set(el, {
                 x: originPosition.x - leftPosition.value - (profile.spriteWidth / 2),
                 y: (originPosition.y - (spriteHeight.value - 96)) - topPosition.value,
