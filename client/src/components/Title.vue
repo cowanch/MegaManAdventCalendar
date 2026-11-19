@@ -36,8 +36,8 @@ function onOptionClick(id: ETitleOption) {
 <template>
     <div class="black-bg">
         <div class="title-container">
-            <div class="title-logo" />
-            <TextDisplay text="Advent Calendar" single-line class="title-text" />
+            <div class="entity title-logo" />
+            <TextDisplay text="Advent Calendar" single-line class="entity title-text" />
             <div class="options-container">
                 <TextOptions
                     :options="Object.values(ETitleOption)"
@@ -45,7 +45,7 @@ function onOptionClick(id: ETitleOption) {
                     @hover="onOptionHover"
                     @click="onOptionClick"
                 />
-                <div class="helmet" />
+                <div class="entity helmet" />
             </div>
             <BuyMeACoffee />
         </div>
@@ -69,6 +69,10 @@ function onOptionClick(id: ETitleOption) {
     width: 546px;
     height: 168px;
     margin-top: 100px;
+
+    @media (max-width: 768px) {
+        transform: scaleX(0.75);
+    }
 }
 .title-text {
     padding-top: 24px;
@@ -79,6 +83,13 @@ function onOptionClick(id: ETitleOption) {
     margin-bottom: 125px;
     justify-content: space-evenly;
     width: 100vh;
+
+    @media (max-width: 768px) {
+        flex-direction: column-reverse;
+        width: unset;
+        height: 100vw;
+        margin-top: unset;
+    }
 }
 .helmet {
     background-image: url('../assets/img/Helmet.png');
