@@ -22,6 +22,11 @@ body {
         background-color: black;
         background-image: none;
     }
+
+    @media (max-width: 768px) {
+        background-size: round(calc(var(--tile-width) * var(--sx) * 3.4), 1px)
+            round(calc(var(--tile-height) * var(--sy)), 1px);
+    }
 }
 #app {
     width: 1920px;

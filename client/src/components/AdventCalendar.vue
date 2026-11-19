@@ -74,6 +74,10 @@ const selectedGameInfo = computed<IGameInfo | undefined>(() => {
     return undefined
 })
 
+const rowCount = computed<number>(() => {
+    return document.body.clientWidth > 768 ? 5 : 3;
+})
+
 const dayData = ref<{ day: number; id: number | undefined }[]>([])
 const showTitle = ref<boolean>(true)
 const highlightKey = ref<number | undefined>(undefined)
@@ -144,7 +148,7 @@ function getRow(row: number): { [index: number]: IPortraitProps | undefined } {
         throw new Error('Row must be 1 or 5')
     }
     const rowObj: { [index: number]: IPortraitProps | undefined } = {}
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < rowCount.value; i++) {
         const index = (row - 1) * 5 + i
         if (portraitProps[index]) {
             rowObj[index] = showPortraits.value ? portraitProps[index].value : undefined
@@ -289,6 +293,13 @@ function onIntroComplete() {
     grid-template-rows: repeat(5, min-content);
     justify-content: center;
     column-gap: 66px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(3, min-content);
+        grid-template-rows: repeat(3, min-content);
+        justify-content: space-around;
+        transform: scale(0.9);
+    }
 }
 .portrait {
     justify-self: center;
